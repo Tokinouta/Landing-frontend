@@ -4,8 +4,14 @@ import styles from './Header.module.css';
 
 export const Header = () => {
   return (
-    <Link to="" className={styles.container}>
-      Home
-    </Link>
+    <div className={styles.container}>
+      <Link to="" className={styles.links}>
+        Home
+      </Link>
+      <div className={styles['right-panel']}>
+        <div className={styles['right-panel-item']}>rara</div>
+        <div className={styles['right-panel-item']}>rarararara</div>
+      </div>
+    </div>
   );
 };
