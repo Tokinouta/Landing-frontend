@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 // import Chart from 'chart.js/auto';
 import ChartComponent from './Components/ChartComponent';
 import { Props } from './Components/types';
+import { ControlPanel } from './Components/ControlPanel';
 
 interface MyState {
   ra: number;
@@ -96,7 +97,7 @@ export default class App extends React.Component<any, MyState> {
             options={this.state.chartConfig.options}
             ref={this.ref}
           ></ChartComponent>
-          {/* <Curves data={data} options={option} type="line" ref={ref}></Curves> */}
+          <ControlPanel></ControlPanel>
         </div>
       </BrowserRouter>
     );
