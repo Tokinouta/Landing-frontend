@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import ChartComponent from './Components/ChartComponent';
 import { Props } from './Components/types';
 import { ControlPanel } from './Components/ControlPanel';
+import { Example } from './Components/Indicator';
 
 interface MyState {
   ra: number;
@@ -102,6 +103,9 @@ export default class App extends React.Component<any, MyState> {
           </div> */}
           <div>
             <ControlPanel></ControlPanel>
+          </div>
+          <div>
+            <Example></Example>
           </div>
         </div>
       </BrowserRouter>
