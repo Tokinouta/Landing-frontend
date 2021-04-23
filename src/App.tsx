@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import { Header } from './Components/Header';
 import { BrowserRouter } from 'react-router-dom';
@@ -73,10 +73,13 @@ export default class App extends React.Component<any, MyState> {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
-          <header className="App-header">
-            <Header></Header>
-            <img src={logo} className="App-logo" alt="logo" />
+        <div
+          className="App"
+          // style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <header></header>
+          <Header></Header>
+          {/*  className="App-header"><img src={logo} className="App-logo" alt="logo" />
             <p>
               Edit <code>src/App.tsx</code> and save to reload.
             </p>
@@ -87,17 +90,19 @@ export default class App extends React.Component<any, MyState> {
               rel="noopener noreferrer"
             >
               Learn React {this.state.ra}
-            </a>
-          </header>
-          <canvas id="chart"></canvas>
-          <button onClick={this.Clicked}>rarara</button>
-          <ChartComponent
-            data={this.state.chartConfig.data}
-            type={this.state.chartConfig.type}
-            options={this.state.chartConfig.options}
-            ref={this.ref}
-          ></ChartComponent>
-          <ControlPanel></ControlPanel>
+            </a> */}
+          {/* <button onClick={this.Clicked}>rarara</button> */}
+          {/*<div style={{ visibility: 'hidden' }}>
+            <ChartComponent
+              data={this.state.chartConfig.data}
+              type={this.state.chartConfig.type}
+              options={this.state.chartConfig.options}
+              ref={this.ref}
+            ></ChartComponent>
+          </div> */}
+          <div>
+            <ControlPanel></ControlPanel>
+          </div>
         </div>
       </BrowserRouter>
     );

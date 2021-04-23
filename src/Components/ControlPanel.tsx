@@ -1,7 +1,8 @@
 import React from 'react';
 import ChartComponent from './ChartComponent';
 import { Props } from './types';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './ControlPanel.css';
 interface MyState {
   chartConfig: Props[];
   ra: number;
@@ -34,6 +35,7 @@ export class ControlPanel extends React.Component<any, MyState> {
         //   },
         // },[temp, temp]
         responsive: true,
+        // maintainAspectRatio: false,
         animation: false,
         legend: false,
       },
@@ -48,29 +50,43 @@ export class ControlPanel extends React.Component<any, MyState> {
 
   render() {
     return (
-      <div>
-        <button
-          onClick={() => {
-            this.setState((prev, prop) => ({
-              ra: prev.ra + 1,
-            }));
-          }}
-        >
-          rararararara
-        </button>
-        {this.chartrefs.map((ref, ind) => {
-          return (
-            <div>
-              <ChartComponent
-                data={this.state.chartConfig[ind].data}
-                type={this.state.chartConfig[ind].type}
-                options={this.state.chartConfig[ind].options}
-                ref={ref}
-              ></ChartComponent>
-              {this.state.ra}
-            </div>
-          );
-        })}
+      <div className="row" style={{ height: '80vh' }}>
+        <div className="col-3">
+          <div className="row justify-content-center align-control-button">
+            <button
+              onClick={() => {
+                this.setState((prev, prop) => ({
+                  ra: prev.ra + 1,
+                }));
+              }}
+            >
+              rararararara
+            </button>
+          </div>
+          <div className="row justify-content-center align-control-button">
+            <button>开始仿真</button>
+          </div>
+          <div className="row justify-content-center align-control-button">
+            <button>暂停仿真</button>
+          </div>
+        </div>
+        <div className="col">
+          <div className="row row-cols-2" style={{ margin: '0 auto' }}>
+            {this.chartrefs.map((ref, ind) => {
+              return (
+                <div className="col">
+                  <ChartComponent
+                    data={this.state.chartConfig[ind].data}
+                    type={this.state.chartConfig[ind].type}
+                    options={this.state.chartConfig[ind].options}
+                    ref={ref}
+                  ></ChartComponent>
+                  {this.state.ra}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     );
   }
