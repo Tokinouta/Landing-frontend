@@ -54,6 +54,7 @@ export class ControlPanel extends React.Component<any, MyState> {
         <div className="col-3">
           <div className="row justify-content-center align-control-button">
             <button
+              className="btn btn-primary"
               onClick={() => {
                 this.setState((prev, prop) => ({
                   ra: prev.ra + 1,
@@ -64,10 +65,10 @@ export class ControlPanel extends React.Component<any, MyState> {
             </button>
           </div>
           <div className="row justify-content-center align-control-button">
-            <button>开始仿真</button>
+            <button className="btn btn-primary">开始仿真</button>
           </div>
           <div className="row justify-content-center align-control-button">
-            <button>暂停仿真</button>
+            <button className="btn btn-primary">暂停仿真</button>
           </div>
         </div>
         <div className="col">
