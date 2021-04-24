@@ -23,34 +23,34 @@ export interface IndicatorProps {
 }
 
 export const Example = (props: IndicatorProps) => {
-  const [showBox, setShowBox] = useState<boolean>(false);
+  const [showBox] = useState<boolean>(false);
   return (
     <div className="row row-col-3">
       <div className="col-4">
-        <HeadingIndicator heading={Math.random() * 360} showBox={showBox} />
+        <HeadingIndicator heading={props.data.heading} showBox={showBox} />
       </div>
       <div className="col-4">
-        <Airspeed speed={Math.random() * 160} showBox={showBox} />
+        <Airspeed speed={props.data.speed} showBox={showBox} />
       </div>
       <div className="col-4">
         <Altimeter
-          altitude={Math.random() * 28000}
-          pressure={1000 + Math.random() * 50}
+          altitude={props.data.altitude}
+          pressure={props.data.pressure}
           showBox={showBox}
         />
       </div>
       <div className="col-4">
         <AttitudeIndicator
-          roll={(Math.random() - 0.5) * 120}
-          pitch={(Math.random() - 0.5) * 40}
+          roll={props.data.roll}
+          pitch={props.data.pitch}
           showBox={showBox}
         />
       </div>
       <div className="col-4">
-        <TurnCoordinator turn={(Math.random() - 0.5) * 120} showBox={showBox} />
+        <TurnCoordinator turn={props.data.turn} showBox={showBox} />
       </div>
       <div className="col-4">
-        <Variometer vario={(Math.random() - 0.5) * 4000} showBox={showBox} />
+        <Variometer vario={props.data.vario} showBox={showBox} />
       </div>
     </div>
   );

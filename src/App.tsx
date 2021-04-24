@@ -2,12 +2,14 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Header } from './Components/Header';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 // import Chart from 'chart.js/auto';
 import ChartComponent from './Components/ChartComponent';
 import { ChartProps } from './Components/types';
 import { ControlPanel } from './Components/ControlPanel';
 import { Example, IndicatorProps } from './Components/Indicator';
+import { History } from './Components/History';
+import { SimulationControl } from './Components/SimulationControl';
 
 interface MyState {
   ra: number;
@@ -128,13 +130,18 @@ export default class App extends React.Component<any, MyState> {
               ref={this.ref}
             ></ChartComponent>
           </div> */}
-          <div>
+          <Routes>
+            <Route path="" element={<SimulationControl />} />
+            <Route path="history" element={<History />} />
+          </Routes>
+          {/* <div>
             <ControlPanel></ControlPanel>
           </div>
           <div>
             <Example data={this.state.indicator.data}></Example>
             <button onClick={this.Clicked}>rarara</button>
-          </div>
+          </div> */}
+          {/* <SimulationControl></SimulationControl> */}
         </div>
       </BrowserRouter>
     );

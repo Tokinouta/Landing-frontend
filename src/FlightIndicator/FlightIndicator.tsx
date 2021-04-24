@@ -17,13 +17,13 @@ import horizon_ball from './horizon_ball~bcMjrNsr.svg';
 import horizon_circle from './horizon_circle~qRDWUGmQ.svg';
 import horizon_mechanics from './horizon_mechanics~rRLTtKVH.svg';
 
-export interface InstrumentProps {
+interface InstrumentProps {
   children?: React.ReactNode;
   showBox?: boolean;
   size?: string;
 }
 
-export interface Props {
+interface Props {
   showBox?: boolean;
   size?: string;
   heading?: number;
