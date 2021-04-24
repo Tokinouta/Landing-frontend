@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { ChartProps } from './types';
 import Chart from 'chart.js/auto';
-
+import lodash from 'lodash';
 export default class ChartComponent extends React.Component<
   ChartProps,
   any,
@@ -49,3 +55,57 @@ export default class ChartComponent extends React.Component<
     );
   }
 }
+export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
+  const chartContainer = useRef<HTMLCanvasElement>(null);
+  const [chartInstance, setChartInstance] = useState<Chart>(null);
+
+  useEffect(() => {
+    console.log('useEffectCalled', chartInstance, Date.now().toString());
+    if (!chartInstance || !chartInstance.ctx) {
+      if (chartContainer && chartContainer.current) {
+        console.log('inside 2 ifs', Date.now().toString());
+        const newChartInstance: Chart = new Chart(
+          chartContainer.current,
+          lodash.clone(props),
+        );
+        setChartInstance(newChartInstance);
+      }
+    }
+    console.log('before return', Date.now().toString());
+    return () => {
+      console.log('destroy chart', Date.now().toString());
+      // console.log(chartInstance);
+      chartInstance && chartInstance.destroy();
+      // console.log(chartInstance);
+    };
+  }, [chartInstance, props]);
+  // props变化的时候会调用上面的useEffect函数，重建一个chart对象，并应用新的数据，
+  // 但是暂时还不知道它对性能有多大影响
+
+  // useEffect(() => {
+  //   chartInstance && chartInstance.update();
+  // }, [chartInstance, props]);
+
+  useImperativeHandle(ref, () => ({
+    update: () => {
+      chartInstance.update();
+    },
+  }));
+
+  const onButtonClick = () => {
+    chartInstance.data.datasets[0].data.push(1);
+    chartInstance.data.labels.push('1');
+    chartInstance.update();
+  };
+
+  return (
+    <div>
+      <button onClick={onButtonClick}>Randomize!</button>
+      <canvas ref={chartContainer} />
+    </div>
+  );
+});
+
+export type Ref = {
+  update: () => void;
+} | null;
