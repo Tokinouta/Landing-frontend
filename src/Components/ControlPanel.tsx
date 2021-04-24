@@ -1,10 +1,10 @@
 import React from 'react';
 import ChartComponent from './ChartComponent';
-import { Props } from './types';
+import { ChartProps } from './types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ControlPanel.css';
 interface MyState {
-  chartConfig: Props[];
+  chartConfig: ChartProps[];
   ra: number;
 }
 

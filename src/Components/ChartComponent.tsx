@@ -1,12 +1,16 @@
 import React from 'react';
-import { Props } from './types';
+import { ChartProps } from './types';
 import Chart from 'chart.js/auto';
 
-export default class ChartComponent extends React.Component<Props, any, any> {
+export default class ChartComponent extends React.Component<
+  ChartProps,
+  any,
+  any
+> {
   chartCanvas: React.RefObject<HTMLCanvasElement>;
   chart: Chart;
-  config: Props | null;
-  constructor(props: Props) {
+  config: ChartProps | null;
+  constructor(props: ChartProps) {
     super(props);
     this.chartCanvas = React.createRef();
     this.chart = null;

@@ -1,5 +1,5 @@
 import Chart from 'chart.js/auto'
-export interface Props {
+export interface ChartProps {
     id?: string;
     height?: number;
     width?: number;

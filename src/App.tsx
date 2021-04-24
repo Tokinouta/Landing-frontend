@@ -5,13 +5,14 @@ import { Header } from './Components/Header';
 import { BrowserRouter } from 'react-router-dom';
 // import Chart from 'chart.js/auto';
 import ChartComponent from './Components/ChartComponent';
-import { Props } from './Components/types';
+import { ChartProps } from './Components/types';
 import { ControlPanel } from './Components/ControlPanel';
-import { Example } from './Components/Indicator';
+import { Example, IndicatorProps } from './Components/Indicator';
 
 interface MyState {
   ra: number;
-  chartConfig: Props;
+  chartConfig: ChartProps;
+  indicator: IndicatorProps;
 }
 export default class App extends React.Component<any, MyState> {
   ref: React.RefObject<ChartComponent>;
@@ -46,6 +47,18 @@ export default class App extends React.Component<any, MyState> {
           legend: false,
         },
       },
+      indicator: {
+        data: {
+          heading: Math.random() * 360,
+          speed: Math.random() * 160,
+          altitude: Math.random() * 28000,
+          pressure: 1000 + Math.random() * 50,
+          roll: (Math.random() - 0.5) * 120,
+          pitch: (Math.random() - 0.5) * 40,
+          turn: (Math.random() - 0.5) * 120,
+          vario: (Math.random() - 0.5) * 4000,
+        },
+      },
     };
     this.ref = React.createRef<ChartComponent>();
   }
@@ -66,6 +79,20 @@ export default class App extends React.Component<any, MyState> {
     this.setState((prev, prop) => ({
       ra: prev.ra + 1,
     })); // this.state.ra = 0;
+    this.setState({
+      indicator: {
+        data: {
+          heading: Math.random() * 360,
+          speed: Math.random() * 160,
+          altitude: Math.random() * 28000,
+          pressure: 1000 + Math.random() * 50,
+          roll: (Math.random() - 0.5) * 120,
+          pitch: (Math.random() - 0.5) * 40,
+          turn: (Math.random() - 0.5) * 120,
+          vario: (Math.random() - 0.5) * 4000,
+        },
+      },
+    });
 
     // console.log(ref.current.current);
     // 如何触发重绘
@@ -92,7 +119,7 @@ export default class App extends React.Component<any, MyState> {
             >
               Learn React {this.state.ra}
             </a> */}
-          {/* <button onClick={this.Clicked}>rarara</button> */}
+
           {/*<div style={{ visibility: 'hidden' }}>
             <ChartComponent
               data={this.state.chartConfig.data}
@@ -105,7 +132,8 @@ export default class App extends React.Component<any, MyState> {
             <ControlPanel></ControlPanel>
           </div>
           <div>
-            <Example></Example>
+            <Example data={this.state.indicator.data}></Example>
+            <button onClick={this.Clicked}>rarara</button>
           </div>
         </div>
       </BrowserRouter>
