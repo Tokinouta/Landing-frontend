@@ -82,10 +82,6 @@ export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
   // props变化的时候会调用上面的useEffect函数，重建一个chart对象，并应用新的数据，
   // 但是暂时还不知道它对性能有多大影响
 
-  // useEffect(() => {
-  //   chartInstance && chartInstance.update();
-  // }, [chartInstance, props]);
-
   useImperativeHandle(ref, () => ({
     update: () => {
       chartInstance.update();
@@ -100,8 +96,8 @@ export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
 
   return (
     <div>
-      <button onClick={onButtonClick}>Randomize!</button>
       <canvas ref={chartContainer} />
+      <button onClick={onButtonClick}>Randomize!</button>
     </div>
   );
 });
