@@ -12,7 +12,9 @@ export const Header = () => {
         <Link to="history" className={styles['right-panel-item']}>
           History
         </Link>
-        <div className={styles['right-panel-item']}>rara</div>
+        <Link to="init" className={styles['right-panel-item']}>
+          Initialization
+        </Link>
         <div className={styles['right-panel-item']}>rarararara</div>
       </div>
     </div>

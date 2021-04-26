@@ -10,6 +10,7 @@ import { ControlPanel } from './Components/ControlPanel';
 import { Example, IndicatorProps } from './Components/Indicator';
 import { History } from './Components/History';
 import { SimulationControl } from './Components/SimulationControl';
+import { Initialization } from './Components/Initialization';
 
 interface MyState {
   ra: number;
@@ -133,6 +134,7 @@ export default class App extends React.Component<any, MyState> {
           <Routes>
             <Route path="" element={<SimulationControl />} />
             <Route path="history" element={<History />} />
+            <Route path="init" element={<Initialization />} />
           </Routes>
           {/* <div>
             <ControlPanel></ControlPanel>
