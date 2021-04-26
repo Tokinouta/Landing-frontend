@@ -1,6 +1,6 @@
 // import lodash from 'lodash';
-import React, { useRef, useState } from 'react';
-import { ChartWithHook, Ref } from './ChartComponent';
+import React, { useEffect, useRef, useState } from 'react';
+import ChartComponent, { ChartWithHook, Ref } from './ChartComponent';
 import { ChartProps } from './types';
 import Select from 'react-select';
 import Switch from 'react-switch';
@@ -8,6 +8,37 @@ import Switch from 'react-switch';
 export const History = (props: any) => {
   const [ra, setRa] = useState<number>(0);
   const [checked, setChecked] = useState<boolean>(false);
+  const chartrefs = React.createRef<ChartComponent>();
+  //   const [scrollPosition, setScrollPosition] = useState<number>(0);
+  //   const scrollY = useRef<number>(window.scrollY);
+  //   const handleScroll = () => {
+  //     const position = window.pageYOffset;
+  //     console.log('position: ', position);
+  //     setScrollPosition(() => {
+  //       //   window.scrollTo(0, position);
+  //       return position;
+  //     });
+  //     scrollY.current = position;
+  //   };
+
+  //   useEffect(() => {
+  //     window.addEventListener('scroll', handleScroll, { passive: true });
+  //     console.log('inside useeffect', scrollY.current);
+  //     // window.scrollTo(0, );
+  //     return () => {
+  //       window.removeEventListener('scroll', handleScroll);
+  //     };
+  //   }, []);
+
+  //   useEffect(() => {
+  //     console.log(
+  //       'inside useEffect, ref scrollY: ',
+  //       scrollY.current,
+  //       'scrollPosition: ',
+  //       scrollPosition,
+  //     );
+  //     window.scrollTo(0, scrollPosition);
+  //   }, [scrollPosition]);
   //   const chartConfig = useRef<ChartProps>({
   //     type: 'line',
   //     data: {
@@ -65,12 +96,15 @@ export const History = (props: any) => {
 
   return (
     <div>
+      <div>{ra}</div>
       <ChartWithHook
         data={temp.current.data}
         type={temp.current.type}
         options={temp.current.options}
         ref={mychart}
       ></ChartWithHook>
+      {/* <div>Lorem ipsum dolor</div>
+      <div>b</div> */}
       {/* <div className="row">
         <div className="col">
           <button>选择变量</button>
@@ -84,10 +118,10 @@ export const History = (props: any) => {
       </div>
       <div>rarara</div> */}
       {/* <ChartComponent
-        data={chartConfig.current.data}
-        type={chartConfig.current.type}
-        options={chartConfig.current.options}
-        ref={historyChart}
+        data={temp.current.data}
+        type={temp.current.type}
+        options={temp.current.options}
+        ref={chartrefs}
       ></ChartComponent> */}
       <button
         onClick={() => {
@@ -100,7 +134,15 @@ export const History = (props: any) => {
       >
         rararararararaar
       </button>
-      <button onClick={() => setRa(ra + 1)}>rarara</button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setRa(ra + 1);
+          //   console.log(window.pageYOffset);
+        }}
+      >
+        rarara
+      </button>
       <div>{ra}</div>
       <div className="container">
         <div className="row">

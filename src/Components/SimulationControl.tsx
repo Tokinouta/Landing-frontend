@@ -57,6 +57,7 @@ export const SimulationControl = () => {
         vario: (Math.random() - 0.5) * 4000,
       },
     });
+    setRa(ra + 1);
     // this.setState(null, () => {
     //   console.log(this.state.chartConfig);
     //   this.state.chartConfig.data.datasets[0].data.push(1);
@@ -87,6 +88,7 @@ export const SimulationControl = () => {
       <div>
         <ControlPanel></ControlPanel>
       </div>
+      <div>{ra}</div>
       <div>
         <Example data={indicator.data}></Example>
         <button onClick={Clicked}>rarara</button>

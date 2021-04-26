@@ -60,10 +60,10 @@ export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
   const [chartInstance, setChartInstance] = useState<Chart>(null);
 
   useEffect(() => {
-    console.log('useEffectCalled', chartInstance, Date.now().toString());
+    // console.log('useEffectCalled', chartInstance, Date.now().toString());
     if (!chartInstance || !chartInstance.ctx) {
       if (chartContainer && chartContainer.current) {
-        console.log('inside 2 ifs', Date.now().toString());
+        // console.log('inside 2 ifs', Date.now().toString());
         const newChartInstance: Chart = new Chart(
           chartContainer.current,
           lodash.clone(props),
@@ -71,14 +71,15 @@ export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
         setChartInstance(newChartInstance);
       }
     }
-    console.log('before return', Date.now().toString());
+    // console.log('before return', Date.now().toString());
     return () => {
-      console.log('destroy chart', Date.now().toString());
+      // console.log('destroy chart', Date.now().toString());
       // console.log(chartInstance);
       chartInstance && chartInstance.destroy();
       // console.log(chartInstance);
     };
-  }, [chartInstance, props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // props变化的时候会调用上面的useEffect函数，重建一个chart对象，并应用新的数据，
   // 但是暂时还不知道它对性能有多大影响
 
