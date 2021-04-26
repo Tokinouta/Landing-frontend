@@ -15,7 +15,9 @@ export const Header = () => {
         <Link to="init" className={styles['right-panel-item']}>
           Initialization
         </Link>
-        <div className={styles['right-panel-item']}>rarararara</div>
+        <Link to="config" className={styles['right-panel-item']}>
+          Configuration
+        </Link>
       </div>
     </div>
   );

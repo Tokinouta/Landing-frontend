@@ -11,6 +11,7 @@ import { Example, IndicatorProps } from './Components/Indicator';
 import { History } from './Components/History';
 import { SimulationControl } from './Components/SimulationControl';
 import { Initialization } from './Components/Initialization';
+import { SimulationConfig } from './Components/SimulationConfig';
 
 interface MyState {
   ra: number;
@@ -135,6 +136,7 @@ export default class App extends React.Component<any, MyState> {
             <Route path="" element={<SimulationControl />} />
             <Route path="history" element={<History />} />
             <Route path="init" element={<Initialization />} />
+            <Route path="config" element={<SimulationConfig />} />
           </Routes>
           {/* <div>
             <ControlPanel></ControlPanel>
