@@ -60,6 +60,20 @@ export const FailureDetection = () => {
         ))}
       </div>
       <h1>{decision}</h1>
+      <div className="row row-col-4">
+        {category?.map((s, ind) => (
+          <div className="col-2" key={ind}>
+            <div className="row justify-content-center  align-items-center">
+              <div className="col-sm" id={s}>
+                {s}
+              </div>
+              <div className="col-sm" style={{ backgroundColor: 'blueviolet' }}>
+                {failureState[ind] ? 'Injected' : 'Not injected'}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
