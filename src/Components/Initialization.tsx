@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Select from 'react-select/src/Select';
+import Select from 'react-select';
 import { useForm } from 'react-hook-form';
 
 type Inputs = {

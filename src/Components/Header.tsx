@@ -18,6 +18,9 @@ export const Header = () => {
         <Link to="config" className={styles['right-panel-item']}>
           Configuration
         </Link>
+        <Link to="failure" className={styles['right-panel-item']}>
+          Failure Detection
+        </Link>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { History } from './Components/History';
 import { SimulationControl } from './Components/SimulationControl';
 import { Initialization } from './Components/Initialization';
 import { SimulationConfig } from './Components/SimulationConfig';
+import { FailureDetection } from './Components/FailureDetection';
 
 interface MyState {
   ra: number;
@@ -137,6 +138,7 @@ export default class App extends React.Component<any, MyState> {
             <Route path="history" element={<History />} />
             <Route path="init" element={<Initialization />} />
             <Route path="config" element={<SimulationConfig />} />
+            <Route path="failure" element={<FailureDetection />} />
           </Routes>
           {/* <div>
             <ControlPanel></ControlPanel>
