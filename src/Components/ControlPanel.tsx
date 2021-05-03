@@ -68,7 +68,6 @@ export class ControlPanel extends React.Component<any, MyState> {
     //   _.cloneDeep(temp),
     // );
     console.log(
-      // this.state.chartConfig,
       this.state.chartConfig[1].data === this.state.chartConfig[0].data,
       this.state.chartConfig[2].data === this.state.chartConfig[0].data,
       this.state.chartConfig[3].data === this.state.chartConfig[0].data,
@@ -76,7 +75,6 @@ export class ControlPanel extends React.Component<any, MyState> {
   }
 
   componentDidMount() {
-    // const hubConnection =
     this.setState({}, () => {
       this.state.simulationHub
         .start()
@@ -85,36 +83,24 @@ export class ControlPanel extends React.Component<any, MyState> {
 
       this.state.simulationHub.on('SendSimulationData', (user, data) => {
         console.log(data);
-        // console.log(this.state.values);
         this.setState(null, () => {
           this.state.chartConfig[0].data.datasets[0].data.push(data);
-          //values.shift();
           this.state.chartConfig[0].data.labels.push('0');
           this.chartrefs[0].current?.updateChart();
-
-          // setTimeout(() => {
-          // }, 2000);
         });
-        setTimeout(() => {}, 500);
-        // this.setState(this.state.chart.update());
-        //       setTimeout(() => {
-        //     // this.state.chart.update();
-        // let p = new Promise((resolve, reject) => {
-        //     // console.log(data);
-        //     // // console.log(this.state.values);
-        //     // this.state.values.push(data);
-        //     // //values.shift();
-        //     // this.state.labels.push(0);
-        //     // // this.state.chart.update();
-        //     setTimeout(() => {
-        //         this.setState(this.state.chart.update())
-        //     }, 100);
-        // });
-        // p.then(console.log("rarara"));
-        // }, 100);
-        // this.setState({ chart }, () => this.state.chart.update());
       });
     });
+  }
+
+  async reset() {
+    await fetch('https://localhost:5001/WeatherForecast/reset');
+    this.state.chartConfig[0].data.datasets[0].data = [];
+    this.state.chartConfig[0].data.labels = [];
+    this.chartrefs[0].current?.updateChart();
+  }
+
+  async startSimulation() {
+    await fetch('https://localhost:5001/WeatherForecast/startSimulation');
   }
 
   render() {
@@ -147,10 +133,17 @@ export class ControlPanel extends React.Component<any, MyState> {
             </button>
           </div>
           <div className="row justify-content-center align-control-button">
-            <button className="btn btn-primary">开始仿真</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => this.startSimulation()}
+            >
+              开始仿真
+            </button>
           </div>
           <div className="row justify-content-center align-control-button">
-            <button className="btn btn-primary">暂停仿真</button>
+            <button className="btn btn-primary" onClick={() => this.reset()}>
+              暂停仿真
+            </button>
           </div>
         </div>
         <div className="col">
