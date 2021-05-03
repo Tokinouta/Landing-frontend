@@ -1,17 +1,19 @@
 import React from 'react';
 import ChartComponent from './ChartComponent';
 import { ChartProps } from './types';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ControlPanel.css';
 import _ from 'lodash';
 interface MyState {
   chartConfig: ChartProps[];
   ra: number;
+  simulationHub: HubConnection;
 }
 
 export class ControlPanel extends React.Component<any, MyState> {
   chartrefs: Array<React.RefObject<ChartComponent>>;
-  // r: Props;
+
   constructor(props: any) {
     super(props);
     // this.r = ;
@@ -50,6 +52,10 @@ export class ControlPanel extends React.Component<any, MyState> {
         _.cloneDeep(temp),
         _.cloneDeep(temp),
       ],
+      simulationHub: new HubConnectionBuilder()
+        .withUrl('https://localhost:5001/simulationHub')
+        // .configureLogging(signalR.LogLevel.Information)
+        .build(),
     };
     this.chartrefs = [
       React.createRef<ChartComponent>(),
@@ -67,6 +73,48 @@ export class ControlPanel extends React.Component<any, MyState> {
       this.state.chartConfig[2].data === this.state.chartConfig[0].data,
       this.state.chartConfig[3].data === this.state.chartConfig[0].data,
     );
+  }
+
+  componentDidMount() {
+    // const hubConnection =
+    this.setState({}, () => {
+      this.state.simulationHub
+        .start()
+        .then(() => console.log('Connection started!'))
+        .catch((err) => console.log('Error while establishing connection :('));
+
+      this.state.simulationHub.on('SendSimulationData', (user, data) => {
+        console.log(data);
+        // console.log(this.state.values);
+        this.setState(null, () => {
+          this.state.chartConfig[0].data.datasets[0].data.push(data);
+          //values.shift();
+          this.state.chartConfig[0].data.labels.push('0');
+          this.chartrefs[0].current?.updateChart();
+
+          // setTimeout(() => {
+          // }, 2000);
+        });
+        setTimeout(() => {}, 500);
+        // this.setState(this.state.chart.update());
+        //       setTimeout(() => {
+        //     // this.state.chart.update();
+        // let p = new Promise((resolve, reject) => {
+        //     // console.log(data);
+        //     // // console.log(this.state.values);
+        //     // this.state.values.push(data);
+        //     // //values.shift();
+        //     // this.state.labels.push(0);
+        //     // // this.state.chart.update();
+        //     setTimeout(() => {
+        //         this.setState(this.state.chart.update())
+        //     }, 100);
+        // });
+        // p.then(console.log("rarara"));
+        // }, 100);
+        // this.setState({ chart }, () => this.state.chart.update());
+      });
+    });
   }
 
   render() {
