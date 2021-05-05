@@ -55,7 +55,7 @@ export default class ChartComponent extends React.Component<
     );
   }
 }
-export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
+export const ChartWithHook = forwardRef<ChartRef, ChartProps>((props, ref) => {
   const chartContainer = useRef<HTMLCanvasElement>(null);
   const [chartInstance, setChartInstance] = useState<Chart>(null);
 
@@ -80,6 +80,7 @@ export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // 上面的dependency用空数组，这样可以避免不必要的rerender
   // props变化的时候会调用上面的useEffect函数，重建一个chart对象，并应用新的数据，
   // 但是暂时还不知道它对性能有多大影响
 
@@ -103,6 +104,6 @@ export const ChartWithHook = forwardRef<Ref, ChartProps>((props, ref) => {
   );
 });
 
-export type Ref = {
+export type ChartRef = {
   update: () => void;
 } | null;
