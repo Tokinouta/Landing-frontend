@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useLocalStorage } from '../useLocalStorage';
 
 export const FailureDetection = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [category, setCategory] = useState<string[]>([
     '方向舵卡死',
     '方向舵饱和',
@@ -28,6 +29,7 @@ export const FailureDetection = () => {
     'failureState',
     new Array(18).fill(false),
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [decision, setDecision] = useState<string>('可以着舰');
 
   useEffect(() => {

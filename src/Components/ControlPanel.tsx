@@ -1,16 +1,12 @@
 import React from 'react';
-import ChartComponent, { ChartRef, ChartWithHook } from './ChartComponent';
+import { ChartRef, ChartWithHook } from './ChartComponent';
 import { ChartProps, ChartPropsArray } from './types';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ControlPanel.css';
-import _ from 'lodash';
-import { DataToPlot } from './DataToPlot';
 import { Example, IndicatorProps } from './Indicator';
 interface MyState {
   chartConfig: ChartProps[];
   ra: number;
-  simulationHub: HubConnection;
   newData: IndicatorProps;
 }
 
@@ -19,47 +15,11 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
 
   constructor(props: ChartPropsArray) {
     super(props);
-    let temp = {
-      type: 'line',
-      data: {
-        labels: ['0'],
-        datasets: [
-          {
-            label: '# of Votes',
-            data: [1],
-            fill: false,
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgba(255, 99, 132, 0.2)',
-          },
-        ],
-      },
-      options: {
-        // scales: {
-        //   y: {
-        //     beginAtZero: true,
-        //   },
-        // },[temp, temp]
-        responsive: true,
-        // maintainAspectRatio: false,
-        animation: false,
-        legend: false,
-      },
-    };
 
     this.state = {
       ra: 0,
       chartConfig: props.chartProps,
       newData: props.newdata,
-      // [
-      //   _.cloneDeep(temp),
-      //   _.cloneDeep(temp),
-      //   _.cloneDeep(temp),
-      //   _.cloneDeep(temp),
-      // ],
-      simulationHub: new HubConnectionBuilder()
-        .withUrl('https://localhost:5001/simulationHub')
-        // .configureLogging(signalR.LogLevel.Information)
-        .build(),
     };
     this.chartrefs = [
       React.createRef<ChartRef>(),
@@ -67,47 +27,12 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       React.createRef<ChartRef>(),
       React.createRef<ChartRef>(),
     ];
-    // new Array(4).fill(React.createRef<ChartComponent>());
-    // this.state.chartConfig = this.state.chartConfig.map(() =>
-    //   _.cloneDeep(temp),
+    // console.log(
+    //   this.state.chartConfig[1].data === this.state.chartConfig[0].data,
+    //   this.state.chartConfig[2].data === this.state.chartConfig[0].data,
+    //   this.state.chartConfig[3].data === this.state.chartConfig[0].data,
     // );
-    console.log(
-      this.state.chartConfig[1].data === this.state.chartConfig[0].data,
-      this.state.chartConfig[2].data === this.state.chartConfig[0].data,
-      this.state.chartConfig[3].data === this.state.chartConfig[0].data,
-    );
   }
-
-  // componentDidMount() {
-  //   console.log(this.state.chartConfig);
-  //   this.setState({}, () => {
-  //     this.state.simulationHub
-  //       .start()
-  //       .then(() => console.log('Connection started!'))
-  //       .catch((err) => console.log('Error while establishing connection :('));
-
-  //     this.state.simulationHub.on(
-  //       'SendSimulationData',
-  //       (user, data: DataToPlot) => {
-  //         console.log(data);
-  //         this.setState(null, () => {
-  //           this.state.chartConfig[0].data.datasets[0].data.push(data.alpha);
-  //           this.state.chartConfig[0].data.labels.push(data.time.toString());
-  //           this.chartrefs[0].current?.updateChart();
-  //           this.state.chartConfig[1].data.datasets[0].data.push(data.x);
-  //           this.state.chartConfig[1].data.labels.push(data.time.toString());
-  //           this.chartrefs[1].current?.updateChart();
-  //           this.state.chartConfig[2].data.datasets[0].data.push(data.psi);
-  //           this.state.chartConfig[2].data.labels.push(data.time.toString());
-  //           this.chartrefs[2].current?.updateChart();
-  //           this.state.chartConfig[3].data.datasets[0].data.push(data.p);
-  //           this.state.chartConfig[3].data.labels.push(data.time.toString());
-  //           this.chartrefs[3].current?.updateChart();
-  //         });
-  //       },
-  //     );
-  //   });
-  // }
 
   updateCharts() {
     this.chartrefs[0].current?.update();
@@ -184,7 +109,6 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
           <div className="col">
             <div className="row row-cols-2" style={{ margin: '0 auto' }}>
               {this.chartrefs.map((ref, ind) => {
-                // console.log(ind) ;
                 return (
                   <div className="col" key={ind}>
                     <ChartWithHook

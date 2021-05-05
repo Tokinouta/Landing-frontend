@@ -1,6 +1,6 @@
 // import lodash from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
-import ChartComponent, { ChartWithHook, ChartRef } from './ChartComponent';
+import React, { useRef, useState } from 'react';
+import { ChartWithHook, ChartRef } from './ChartComponent';
 import { ChartProps } from './types';
 import Select from 'react-select';
 import Switch from 'react-switch';
