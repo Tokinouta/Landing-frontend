@@ -47,9 +47,14 @@ export const History = (props: any) => {
         ref={mychart}
       ></ChartWithHook>
       <button
-        onClick={() => {
-          temp.current.data.datasets[0].data.push(Math.random());
-          temp.current.data.labels.push('0');
+        onClick={async () => {
+          const result = await fetch('https://localhost:5001/History/Index');
+          const data = await result.json();
+          console.log(data);
+          temp.current.data.datasets[0].data = data;
+          temp.current.data.labels = new Array(
+            temp.current.data.datasets[0].data.length,
+          ).fill('0');
           mychart && mychart.current?.update();
         }}
       >
