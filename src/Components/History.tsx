@@ -4,7 +4,6 @@ import { ChartWithHook, ChartRef } from './ChartComponent';
 import { ChartProps } from './types';
 import Select from 'react-select';
 import Switch from 'react-switch';
-import { Console } from 'node:console';
 
 export const History = (props: any) => {
   const [ra, setRa] = useState<number>(0);
@@ -32,11 +31,27 @@ export const History = (props: any) => {
     },
   });
 
-  const options = [
+  const [options, setOptions] = useState([
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
-  ];
+  ]);
+  const [selectedOptiont, setSelectOption] = useState<string | undefined>(
+    options[0].value,
+  );
+
+  const loadDates = async () => {
+    await fetch('https://localhost:5001/History/Edit')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setOptions(
+          data.map((d: any) => {
+            return { value: d, label: d };
+          }),
+        );
+      });
+  };
 
   const loadData = async () => {
     await fetch('https://localhost:5001/History/Create', {
@@ -45,12 +60,12 @@ export const History = (props: any) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(options),
+      body: JSON.stringify([selectedOptiont]),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        temp.current.data.datasets[0].data = data.data;
+        console.log(data, data.data[0]);
+        temp.current.data.datasets[0].data = data.data[0];
         temp.current.data.labels = new Array(
           temp.current.data.datasets[0].data.length,
         ).fill('0');
@@ -94,7 +109,11 @@ export const History = (props: any) => {
         <div className="row">
           <Select
             options={options}
-            onChange={(selectedOption) => console.log('rarara', selectedOption)}
+            onChange={(selectedOption) => {
+              console.log('rarara', selectedOption);
+              setSelectOption(selectedOption?.value);
+              console.log(selectedOptiont);
+            }}
             className="col-6 mx-auto"
           ></Select>
           <div className="align-self-end">
@@ -105,9 +124,11 @@ export const History = (props: any) => {
           <Switch
             onChange={(c) => {
               setChecked(c);
+              console.log(checked);
             }}
             checked={checked}
           ></Switch>
+          <button onClick={loadDates}>rarararar</button>
         </div>
       </div>
     </div>
