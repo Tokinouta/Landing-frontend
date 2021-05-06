@@ -1,9 +1,32 @@
 // import lodash from 'lodash';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChartWithHook, ChartRef } from './ChartComponent';
 import { ChartProps } from './types';
 import Select from 'react-select';
 import Switch from 'react-switch';
+
+const colors = [
+  {
+    backgroundColor: 'rgb(255, 99, 132)',
+    borderColor: 'rgba(255, 99, 132, 0.2)',
+  },
+  {
+    backgroundColor: 'rgb(135, 31, 219)',
+    borderColor: 'rgba(135, 31, 219, 0.2)',
+  },
+  {
+    backgroundColor: 'rgb(51, 22, 212)',
+    borderColor: 'rgba(51, 22, 212, 0.2)',
+  },
+  {
+    backgroundColor: 'rgb(14, 184, 14)',
+    borderColor: 'rgba(14, 184, 14, 0.2)',
+  },
+  {
+    backgroundColor: 'rgb(25, 205, 236)',
+    borderColor: 'rgba(25, 205, 236, 0.2)',
+  },
+];
 
 export const History = (props: any) => {
   const [ra, setRa] = useState<number>(0);
@@ -13,11 +36,11 @@ export const History = (props: any) => {
   const temp = useRef<ChartProps>({
     type: 'line',
     data: {
-      labels: ['0'],
+      labels: [],
       datasets: [
         {
           label: '# of Votes',
-          data: [1],
+          data: [],
           fill: false,
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgba(255, 99, 132, 0.2)',
@@ -36,9 +59,20 @@ export const History = (props: any) => {
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ]);
-  const [selectedOptiont, setSelectOption] = useState<string | undefined>(
+  const [dataOption, setDataOption] = useState([
+    { value: 'position_record', label: 'position_record' },
+    { value: 'Vk_record', label: 'Vk_record' },
+    { value: 'phi_record', label: 'phi_record' },
+    { value: 'psi_record', label: 'psi_record' },
+    { value: 'theta_record', label: 'theta_record' },
+    { value: 'current_T_record', label: 'current_T_record' },
+    { value: 'time_record', label: 'time_record' },
+  ]);
+  const [dataItem, setDataitem] = useState<string>();
+
+  const [selectedOptiont, setSelectOption] = useState<string[] | undefined>([
     options[0].value,
-  );
+  ]);
 
   const loadDates = async () => {
     await fetch('https://localhost:5001/History/Edit')
@@ -53,6 +87,10 @@ export const History = (props: any) => {
       });
   };
 
+  useEffect(() => {
+    loadDates();
+  }, []);
+
   const loadData = async () => {
     await fetch('https://localhost:5001/History/Create', {
       method: 'POST',
@@ -60,29 +98,40 @@ export const History = (props: any) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify([selectedOptiont]),
+      body: JSON.stringify({ dataItem, selectedOptiont }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, data.data[0]);
-        temp.current.data.datasets[0].data = data.data[0];
-        temp.current.data.labels = new Array(
-          temp.current.data.datasets[0].data.length,
-        ).fill('0');
+        console.log(data);
+        temp.current.data.datasets = new Array(data.data.length);
+        let dataLength = 0;
+        data.data.forEach((d: any, ind: number) => {
+          temp.current.data.datasets[ind] = {
+            label: '# of Votes',
+            data: d,
+            fill: false,
+            backgroundColor: colors[ind].backgroundColor,
+            borderColor: colors[ind].borderColor,
+          };
+          dataLength = dataLength > d.length ? dataLength : d.length;
+        });
+        temp.current.data.labels = new Array(dataLength)
+          .fill(0)
+          .map((le, ind) => (ind * 0.125).toString());
         mychart && mychart.current?.update();
       });
   };
 
   return (
     <div>
-      <div>{ra}</div>
+      {/* <div>{ra}</div> */}
       <ChartWithHook
         data={temp.current.data}
         type={temp.current.type}
         options={temp.current.options}
         ref={mychart}
       ></ChartWithHook>
-      <button
+      {/* <button
         onClick={async () => {
           const result = await fetch('https://localhost:5001/History/Index');
           const data = await result.json();
@@ -95,8 +144,8 @@ export const History = (props: any) => {
         }}
       >
         rararararararaar
-      </button>
-      <button
+      </button> */}
+      {/* <button
         onClick={(e) => {
           e.preventDefault();
           setRa(ra + 1);
@@ -104,23 +153,34 @@ export const History = (props: any) => {
       >
         rarara
       </button>
-      <div>{ra}</div>
+      <div>{ra}</div> */}
       <div className="container">
         <div className="row">
           <Select
             options={options}
             onChange={(selectedOption) => {
               console.log('rarara', selectedOption);
-              setSelectOption(selectedOption?.value);
+              setSelectOption(selectedOption.map((s) => s.value));
               console.log(selectedOptiont);
             }}
             className="col-6 mx-auto"
+            isMulti
           ></Select>
           <div className="align-self-end">
             <button onClick={loadData}>load</button>
           </div>
         </div>
-        <div>
+        <div className="row">
+          <Select
+            options={dataOption}
+            onChange={(selectedOption) => {
+              console.log('rarara', selectedOption);
+              setDataitem(selectedOption?.value);
+            }}
+            className="col-6 mx-auto"
+          ></Select>
+        </div>
+        {/* <div>
           <Switch
             onChange={(c) => {
               setChecked(c);
@@ -129,7 +189,7 @@ export const History = (props: any) => {
             checked={checked}
           ></Switch>
           <button onClick={loadDates}>rarararar</button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
