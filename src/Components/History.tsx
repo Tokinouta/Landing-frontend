@@ -4,6 +4,7 @@ import { ChartWithHook, ChartRef } from './ChartComponent';
 import { ChartProps } from './types';
 import Select from 'react-select';
 import Switch from 'react-switch';
+import { Console } from 'node:console';
 
 export const History = (props: any) => {
   const [ra, setRa] = useState<number>(0);
@@ -36,6 +37,26 @@ export const History = (props: any) => {
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ];
+
+  const loadData = async () => {
+    await fetch('https://localhost:5001/History/Create', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(options),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        temp.current.data.datasets[0].data = data.data;
+        temp.current.data.labels = new Array(
+          temp.current.data.datasets[0].data.length,
+        ).fill('0');
+        mychart && mychart.current?.update();
+      });
+  };
 
   return (
     <div>
@@ -77,7 +98,7 @@ export const History = (props: any) => {
             className="col-6 mx-auto"
           ></Select>
           <div className="align-self-end">
-            <button>load</button>
+            <button onClick={loadData}>load</button>
           </div>
         </div>
         <div>
