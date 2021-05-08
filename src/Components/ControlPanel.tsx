@@ -8,6 +8,7 @@ interface MyState {
   chartConfig: ChartProps[];
   ra: number;
   newData: IndicatorProps;
+  isConnectionReady: boolean;
 }
 
 export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
@@ -20,6 +21,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       ra: 0,
       chartConfig: props.chartProps,
       newData: props.newdata,
+      isConnectionReady: false,
     };
     this.chartrefs = [
       React.createRef<ChartRef>(),
@@ -33,6 +35,15 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     //   this.state.chartConfig[3].data === this.state.chartConfig[0].data,
     // );
   }
+  // forceUpdate() {
+  //   console.log(this.props.isConnectionReady);
+  // }
+
+  // componentDidUpdate() {
+  //   console.log(this.props.isConnectionReady);
+  //   this.setState({ isConnectionReady: this.props.isConnectionReady });
+  //   console.log(this.props.isConnectionReady);
+  // }
 
   updateCharts() {
     this.chartrefs[0].current?.update();
@@ -40,6 +51,10 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     this.chartrefs[2].current?.update();
     this.chartrefs[3].current?.update();
     this.setState({ newData: this.props.newdata });
+  }
+
+  setConnectionReady() {
+    this.setState({ isConnectionReady: true });
   }
 
   async reset() {
@@ -60,7 +75,9 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   }
 
   render() {
-    console.log('controlPanel render called');
+    // console.log('controlPanel render called');
+    console.log(this.state.isConnectionReady);
+
     return (
       <div>
         <div className="row">
@@ -85,6 +102,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
                     });
                     //
                   });
+                  console.log(this.state.isConnectionReady);
                 }}
               >
                 rararararara
@@ -94,13 +112,14 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
               <button
                 className="btn btn-primary"
                 onClick={() => this.startSimulation()}
+                disabled={!this.state.isConnectionReady}
               >
                 开始仿真
               </button>
             </div>
             <div className="row justify-content-center align-control-button">
               <button className="btn btn-primary" onClick={() => this.reset()}>
-                暂停仿真
+                停止仿真
               </button>
             </div>
           </div>

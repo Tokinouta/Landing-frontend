@@ -66,7 +66,7 @@ export const SimulationControl = () => {
     lodash.cloneDeep(temp),
     lodash.cloneDeep(temp),
   ]);
-
+  const [isReady, setIsReady] = useState<boolean>(false);
   const controlComponentRef = createRef<ControlPanel>();
 
   const Clicked = () => {
@@ -90,7 +90,9 @@ export const SimulationControl = () => {
       simulationHub
         .start()
         .then(() => {
+          controlComponentRef.current?.setConnectionReady();
           console.log('Connection started!');
+
           simulationHub.on('SendSimulationData', (user, data: DataToPlot) => {
             console.log(data);
             chartConfig[0].data.datasets[0].data.push(data.alpha);
@@ -121,12 +123,20 @@ export const SimulationControl = () => {
     // eslint-disable-next-line
   }, []);
 
+  // useEffect(() => {
+  //   if (simulationHub.state === HubConnectionState.Connected) {
+  //     console.log('called');
+  //     setIsReady(true);
+  //   }
+  // }, [simulationHub.state]);
+
   return (
     <div>
       <div>
         <ControlPanel
           chartProps={chartConfig}
           newdata={indicator}
+          isConnectionReady={isReady}
           ref={controlComponentRef}
         ></ControlPanel>
       </div>
