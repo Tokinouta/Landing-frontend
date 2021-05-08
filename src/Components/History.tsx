@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChartWithHook, ChartRef } from './ChartComponent';
 import { ChartProps } from './types';
 import Select from 'react-select';
-import Switch from 'react-switch';
 
 const colors = [
   {
@@ -29,8 +28,8 @@ const colors = [
 ];
 
 export const History = (props: any) => {
-  const [ra, setRa] = useState<number>(0);
-  const [checked, setChecked] = useState<boolean>(false);
+  // const [ra, setRa] = useState<number>(0);
+  // const [checked, setChecked] = useState<boolean>(false);
   const mychart = useRef<ChartRef>(null);
 
   const temp = useRef<ChartProps>({
@@ -59,6 +58,7 @@ export const History = (props: any) => {
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ]);
+  // eslint-disable-next-line
   const [dataOption, setDataOption] = useState([
     { value: 'position_record', label: 'position_record' },
     { value: 'Vk_record', label: 'Vk_record' },
@@ -78,7 +78,7 @@ export const History = (props: any) => {
     await fetch('https://localhost:5001/History/Edit')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setOptions(
           data.map((d: any) => {
             return { value: d, label: d };
@@ -102,7 +102,7 @@ export const History = (props: any) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         temp.current.data.datasets = new Array(data.data.length);
         let dataLength = 0;
         data.data.forEach((d: any, ind: number) => {
@@ -155,31 +155,30 @@ export const History = (props: any) => {
       </button>
       <div>{ra}</div> */}
       <div className="container">
-        <div className="row">
+        <div className="row align-items-start">
           <Select
             options={options}
             onChange={(selectedOption) => {
-              console.log('rarara', selectedOption);
+              // console.log('rarara', selectedOption);
               setSelectOption(selectedOption.map((s) => s.value));
               console.log(selectedOptiont);
             }}
-            className="col-6 mx-auto"
+            className="col-5 mx-auto"
             isMulti
           ></Select>
-          <div className="align-self-end">
-            <button onClick={loadData}>load</button>
-          </div>
-        </div>
-        <div className="row">
           <Select
             options={dataOption}
             onChange={(selectedOption) => {
-              console.log('rarara', selectedOption);
+              // console.log('rarara', selectedOption);
               setDataitem(selectedOption?.value);
             }}
-            className="col-6 mx-auto"
+            className="col-5 mx-auto"
           ></Select>
+          <div className="col">
+            <button onClick={loadData}>load</button>
+          </div>
         </div>
+        <div className="row"></div>
         {/* <div>
           <Switch
             onChange={(c) => {

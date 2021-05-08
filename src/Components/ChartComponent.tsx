@@ -90,16 +90,16 @@ export const ChartWithHook = forwardRef<ChartRef, ChartProps>((props, ref) => {
     },
   }));
 
-  const onButtonClick = () => {
-    chartInstance.data.datasets[0].data.push(1);
-    chartInstance.data.labels.push('1');
-    chartInstance.update();
-  };
+  // const onButtonClick = () => {
+  //   chartInstance.data.datasets[0].data.push(1);
+  //   chartInstance.data.labels.push('1');
+  //   chartInstance.update();
+  // };
 
   return (
     <div>
       <canvas ref={chartContainer} />
-      <button onClick={onButtonClick}>Randomize!</button>
+      {/* <button onClick={onButtonClick}>Randomize!</button> */}
     </div>
   );
 });
