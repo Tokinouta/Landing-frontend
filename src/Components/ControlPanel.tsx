@@ -8,7 +8,8 @@ interface MyState {
   chartConfig: ChartProps[];
   ra: number;
   newData: IndicatorProps;
-  isConnectionReady: boolean;
+  isStartDisabled: boolean;
+  isResetDisabled: boolean;
 }
 
 export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
@@ -21,7 +22,8 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       ra: 0,
       chartConfig: props.chartProps,
       newData: props.newdata,
-      isConnectionReady: false,
+      isStartDisabled: true,
+      isResetDisabled: true,
     };
     this.chartrefs = [
       React.createRef<ChartRef>(),
@@ -54,10 +56,11 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   }
 
   setConnectionReady() {
-    this.setState({ isConnectionReady: true });
+    this.setState({ isStartDisabled: false });
   }
 
   async reset() {
+    this.setState({ isResetDisabled: true, isStartDisabled: false });
     await fetch('https://localhost:5001/WeatherForecast/reset');
     this.state.chartConfig[0].data.datasets[0].data = [];
     this.state.chartConfig[0].data.labels = [];
@@ -71,18 +74,19 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   }
 
   async startSimulation() {
+    this.setState({ isResetDisabled: false, isStartDisabled: true });
     await fetch('https://localhost:5001/WeatherForecast/startSimulation');
   }
 
   render() {
     // console.log('controlPanel render called');
-    console.log(this.state.isConnectionReady);
+    console.log(this.state.isStartDisabled);
 
     return (
       <div>
         <div className="row">
           <div className="col-3">
-            <div className="row justify-content-center align-control-button">
+            {/* <div className="row justify-content-center align-control-button">
               <button
                 className="btn btn-primary"
                 onClick={() => {
@@ -102,23 +106,27 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
                     });
                     //
                   });
-                  console.log(this.state.isConnectionReady);
+                  console.log(this.state.isStartDisabled);
                 }}
               >
                 rararararara
               </button>
-            </div>
+            </div> */}
             <div className="row justify-content-center align-control-button">
               <button
                 className="btn btn-primary"
                 onClick={() => this.startSimulation()}
-                disabled={!this.state.isConnectionReady}
+                disabled={this.state.isStartDisabled}
               >
                 开始仿真
               </button>
             </div>
             <div className="row justify-content-center align-control-button">
-              <button className="btn btn-primary" onClick={() => this.reset()}>
+              <button
+                className="btn btn-primary"
+                onClick={() => this.reset()}
+                disabled={this.state.isResetDisabled}
+              >
                 停止仿真
               </button>
             </div>
@@ -136,7 +144,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
                       options={this.state.chartConfig[ind].options}
                       ref={ref}
                     ></ChartWithHook>
-                    {this.state.ra}
+                    {/* {this.state.ra} */}
                   </div>
                 );
               })}

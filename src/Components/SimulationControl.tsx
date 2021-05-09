@@ -92,6 +92,11 @@ export const SimulationControl = () => {
         .then(() => {
           controlComponentRef.current?.setConnectionReady();
           console.log('Connection started!');
+          chartConfig[0].data.datasets[0].label = 'alpha';
+          chartConfig[1].data.datasets[0].label = 'x';
+          chartConfig[2].data.datasets[0].label = 'psi';
+          chartConfig[3].data.datasets[0].label = 'p';
+          controlComponentRef?.current?.updateCharts();
 
           simulationHub.on('SendSimulationData', (user, data: DataToPlot) => {
             console.log(data);

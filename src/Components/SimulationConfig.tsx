@@ -241,7 +241,7 @@ export const SimulationConfig = () => {
   return (
     <div>
       <h1>仿真配置设置</h1>
-      <button
+      {/* <button
         onClick={() => {
           console.log(UseAttitudeTrackingDifferentiator);
           console.log(TrajactoryConfig);
@@ -255,7 +255,7 @@ export const SimulationConfig = () => {
         }}
       >
         rarara
-      </button>
+      </button> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row mb-3 justify-content-center">
           <div className="col-3 align-self-center">导航控制器</div>
