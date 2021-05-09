@@ -48,11 +48,15 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   // }
 
   updateCharts() {
+    this.updateInternalCharts();
+    this.setState({ newData: this.props.newdata });
+  }
+
+  updateInternalCharts() {
     this.chartrefs[0].current?.update();
     this.chartrefs[1].current?.update();
     this.chartrefs[2].current?.update();
     this.chartrefs[3].current?.update();
-    this.setState({ newData: this.props.newdata });
   }
 
   setConnectionReady() {
@@ -60,7 +64,6 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   }
 
   async reset() {
-    this.setState({ isResetDisabled: true, isStartDisabled: false });
     await fetch('https://localhost:5001/WeatherForecast/reset');
     this.state.chartConfig[0].data.datasets[0].data = [];
     this.state.chartConfig[0].data.labels = [];
@@ -70,7 +73,21 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     this.state.chartConfig[2].data.labels = [];
     this.state.chartConfig[3].data.datasets[0].data = [];
     this.state.chartConfig[3].data.labels = [];
-    this.updateCharts();
+    this.updateInternalCharts();
+    this.setState({
+      isResetDisabled: true,
+      isStartDisabled: false,
+      newData: {
+        data: {
+          heading: 0,
+          speed: 0,
+          altitude: 0,
+          roll: 0,
+          pitch: 0,
+          vario: 0,
+        },
+      },
+    });
   }
 
   async startSimulation() {
@@ -150,7 +167,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
               })}
             </div>
             {/* <div>{JSON.stringify(this.state.newData.data)}</div> */}
-            <Example data={this.props.newdata.data} />
+            <Example data={this.state.newData.data} />
           </div>
         </div>
       </div>

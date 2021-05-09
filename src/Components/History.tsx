@@ -38,7 +38,7 @@ export const History = (props: any) => {
       labels: [],
       datasets: [
         {
-          label: '# of Votes',
+          label: '',
           data: [],
           fill: false,
           backgroundColor: 'rgb(255, 99, 132)',
@@ -50,8 +50,23 @@ export const History = (props: any) => {
       responsive: true,
       animation: false,
       legend: false,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Custom Chart Title',
+          // padding: {
+          //   top: 10,
+          //   bottom: 30,
+          // },
+          font: {
+            size: 30,
+          },
+        },
+      },
     },
   });
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [options, setOptions] = useState([
     { value: 'chocolate', label: 'Chocolate' },
@@ -84,6 +99,9 @@ export const History = (props: any) => {
             return { value: d, label: d };
           }),
         );
+      })
+      .then(() => {
+        setIsLoading(false);
       });
   };
 
@@ -107,7 +125,7 @@ export const History = (props: any) => {
         let dataLength = 0;
         data.data.forEach((d: any, ind: number) => {
           temp.current.data.datasets[ind] = {
-            label: '# of Votes',
+            label: (selectedOptiont && selectedOptiont[ind]) || '',
             data: d,
             fill: false,
             backgroundColor: colors[ind].backgroundColor,
@@ -163,16 +181,20 @@ export const History = (props: any) => {
               setSelectOption(selectedOption.map((s) => s.value));
               console.log(selectedOptiont);
             }}
+            isLoading={isLoading}
             className="col-5 mx-auto"
             isMulti
+            menuPlacement="auto"
           ></Select>
           <Select
             options={dataOption}
             onChange={(selectedOption) => {
               // console.log('rarara', selectedOption);
               setDataitem(selectedOption?.value);
+              temp.current.options.plugins.title.text = selectedOption?.label;
             }}
             className="col-5 mx-auto"
+            menuPlacement="auto"
           ></Select>
           <div className="col">
             <button onClick={loadData}>load</button>

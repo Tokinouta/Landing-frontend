@@ -10,6 +10,9 @@ import {
 import { DataToPlot } from './DataToPlot';
 import lodash from 'lodash';
 
+const METERPS_TO_FEETPMIN = 196.8504;
+const METERPS_TO_KNOT = 1.943844;
+
 export const SimulationControl = () => {
   let temp = {
     type: 'line',
@@ -110,14 +113,12 @@ export const SimulationControl = () => {
             chartConfig[3].data.labels.push(data.time.toString());
             controlComponentRef?.current?.updateCharts();
             indicator.data = {
-              heading: data.chi * 360,
-              speed: data.vk * 160,
+              heading: (data.chi / Math.PI) * 180,
+              speed: data.vk * METERPS_TO_KNOT,
               altitude: -data.z,
-              pressure: 1013,
-              roll: data.miu * 120,
-              pitch: data.gamma * 40,
-              turn: 0,
-              vario: data.vk * Math.sin(data.gamma),
+              roll: (data.miu / Math.PI) * 180,
+              pitch: (data.gamma / Math.PI) * 180,
+              vario: data.vk * Math.sin(data.gamma) * METERPS_TO_FEETPMIN,
             };
           });
         })
