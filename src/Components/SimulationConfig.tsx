@@ -133,6 +133,7 @@ export const SimulationConfig = () => {
       UseL1Adaptive: UseL1AdaptiveOptions[UseL1Adaptive].value,
     };
     console.log(newConfig);
+    // https://metabox.io/send-get-post-request-with-javascript-fetch-api/
     await fetch('https://localhost:5001/WeatherForecast/config', {
       method: 'post',
       headers: {
