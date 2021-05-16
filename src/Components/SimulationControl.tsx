@@ -35,7 +35,7 @@ export const SimulationControl = () => {
       //   },
       // },[temp, temp]
       responsive: true,
-      // maintainAspectRatio: false,
+      maintainAspectRatio: false,
       animation: false,
       legend: false,
     },
@@ -146,10 +146,10 @@ export const SimulationControl = () => {
           ref={controlComponentRef}
         ></ControlPanel>
       </div>
-      <div>{ra}</div>
+      {/* <div>{ra}</div>
       <div>
         <button onClick={Clicked}>rarara</button>
-      </div>
+      </div> */}
     </div>
   );
 };

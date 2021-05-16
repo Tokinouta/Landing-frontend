@@ -50,6 +50,7 @@ export const History = (props: any) => {
       responsive: true,
       animation: false,
       legend: false,
+      maintainAspectRatio: false,
       plugins: {
         title: {
           display: true,
@@ -141,14 +142,9 @@ export const History = (props: any) => {
   };
 
   return (
-    <div>
+    <div className="container-fluid">
       {/* <div>{ra}</div> */}
-      <ChartWithHook
-        data={temp.current.data}
-        type={temp.current.type}
-        options={temp.current.options}
-        ref={mychart}
-      ></ChartWithHook>
+
       {/* <button
         onClick={async () => {
           const result = await fetch('https://localhost:5001/History/Index');
@@ -172,36 +168,46 @@ export const History = (props: any) => {
         rarara
       </button>
       <div>{ra}</div> */}
-      <div className="container">
-        <div className="row align-items-start">
-          <Select
-            options={options}
-            onChange={(selectedOption) => {
-              // console.log('rarara', selectedOption);
-              setSelectOption(selectedOption.map((s) => s.value));
-              console.log(selectedOptiont);
-            }}
-            isLoading={isLoading}
-            className="col-5 mx-auto"
-            isMulti
-            menuPlacement="auto"
-          ></Select>
-          <Select
-            options={dataOption}
-            onChange={(selectedOption) => {
-              // console.log('rarara', selectedOption);
-              setDataitem(selectedOption?.value);
-              temp.current.options.plugins.title.text = selectedOption?.label;
-            }}
-            className="col-5 mx-auto"
-            menuPlacement="auto"
-          ></Select>
-          <div className="col">
-            <button onClick={loadData}>load</button>
-          </div>
+
+      <div className="row" style={{ minHeight: '80vh' }}>
+        <ChartWithHook
+          data={temp.current.data}
+          type={temp.current.type}
+          options={temp.current.options}
+          ref={mychart}
+        ></ChartWithHook>
+      </div>
+      <div
+        className="row align-items-start fixed-bottom"
+        style={{ margin: '1em 0.5em' }}
+      >
+        <Select
+          options={options}
+          onChange={(selectedOption) => {
+            // console.log('rarara', selectedOption);
+            setSelectOption(selectedOption.map((s) => s.value));
+            console.log(selectedOptiont);
+          }}
+          isLoading={isLoading}
+          className="col-5 mx-auto"
+          isMulti
+          menuPlacement="auto"
+        ></Select>
+        <Select
+          options={dataOption}
+          onChange={(selectedOption) => {
+            // console.log('rarara', selectedOption);
+            setDataitem(selectedOption?.value);
+            temp.current.options.plugins.title.text = selectedOption?.label;
+          }}
+          className="col-5 mx-auto"
+          menuPlacement="auto"
+        ></Select>
+        <div className="col">
+          <button onClick={loadData}>load</button>
         </div>
-        <div className="row"></div>
-        {/* <div>
+      </div>
+      {/* <div>
           <Switch
             onChange={(c) => {
               setChecked(c);
@@ -211,7 +217,6 @@ export const History = (props: any) => {
           ></Switch>
           <button onClick={loadDates}>rarararar</button>
         </div> */}
-      </div>
     </div>
   );
 };

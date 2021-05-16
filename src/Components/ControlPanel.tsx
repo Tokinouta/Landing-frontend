@@ -100,7 +100,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     console.log(this.state.isStartDisabled);
 
     return (
-      <div>
+      <div className="container-fluid" style={{ minHeight: '50vh' }}>
         <div className="row">
           <div className="col-3">
             {/* <div className="row justify-content-center align-control-button">
@@ -148,8 +148,8 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
               </button>
             </div>
           </div>
-        </div>
-        <div className="row">
+          {/* </div>
+        <div className="row"> */}
           <div className="col">
             <div className="row row-cols-2" style={{ margin: '0 auto' }}>
               {this.chartrefs.map((ref, ind) => {
@@ -167,7 +167,9 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
               })}
             </div>
             {/* <div>{JSON.stringify(this.state.newData.data)}</div> */}
-            <Example data={this.state.newData.data} />
+          </div>
+          <div className="col">
+            <Example data={this.state.newData.data} size={'100%'} />
           </div>
         </div>
       </div>

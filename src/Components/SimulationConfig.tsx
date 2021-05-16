@@ -43,14 +43,12 @@ export const SimulationConfig = () => {
     { value: 2, label: 'Strawberry' },
     { value: 3, label: 'Vanilla' },
   ]);
-  const [
-    AngularRateControllerOptions,
-    setAngularRateControllerOptions,
-  ] = useState([
-    { value: 1, label: 'Chocolate' },
-    { value: 2, label: 'Strawberry' },
-    { value: 3, label: 'Vanilla' },
-  ]);
+  const [AngularRateControllerOptions, setAngularRateControllerOptions] =
+    useState([
+      { value: 1, label: 'Chocolate' },
+      { value: 2, label: 'Strawberry' },
+      { value: 3, label: 'Vanilla' },
+    ]);
   const [DisturbanceObserverOptions, setDisturbanceObserverOptions] = useState([
     { value: 1, label: 'Chocolate' },
     { value: 2, label: 'Strawberry' },
@@ -102,10 +100,8 @@ export const SimulationConfig = () => {
   const [TrajactoryConfig, setTrajactoryConfig] = useState<number>(0);
   const [UseDisturbanceTypeI, setUseDisturbanceTypeI] = useState<number>(0);
   const [IsWindEnabled, setIsWindEnabled] = useState<number>(0);
-  const [
-    IsDeckCompensationEnabled,
-    setIsDeckCompensationEnabled,
-  ] = useState<number>(0);
+  const [IsDeckCompensationEnabled, setIsDeckCompensationEnabled] =
+    useState<number>(0);
   const [UseL1Adaptive, setUseL1Adaptive] = useState<number>(0);
 
   const onSubmit = async (data: IFormInput) => {
@@ -241,7 +237,7 @@ export const SimulationConfig = () => {
 
   return (
     <div>
-      <h1>仿真配置设置</h1>
+      <h1 style={{ padding: '2em 0.5em 0.5em 0.5em' }}>仿真配置设置</h1>
       {/* <button
         onClick={() => {
           console.log(UseAttitudeTrackingDifferentiator);
@@ -258,293 +254,336 @@ export const SimulationConfig = () => {
         rarara
       </button> */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">导航控制器</div>
-          <div className="col-6">
-            <Controller
-              name="GuidanceController"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={GuidanceControllerOptions}
-                  value={GuidanceControllerOptions[GuidanceController]}
-                  onChange={(r) => {
-                    setGuidanceController(
-                      GuidanceControllerOptions.findIndex((p) =>
-                        Object.is(p, r),
-                      ),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
+        <div className="container">
+          {' '}
+          <div className="row row-col-6">
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">导航控制器</div>
+                <div className="col-6">
+                  <Controller
+                    name="GuidanceController"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={GuidanceControllerOptions}
+                        value={GuidanceControllerOptions[GuidanceController]}
+                        onChange={(r) => {
+                          setGuidanceController(
+                            GuidanceControllerOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">姿态控制器</div>
+                <div className="col-6">
+                  <Controller
+                    name="AttitudeController"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={AttitudeControllerOptions}
+                        value={AttitudeControllerOptions[AttitudeController]}
+                        onChange={(r) => {
+                          setAttitudeController(
+                            AttitudeControllerOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">角速度控制器</div>
+                <div className="col-6">
+                  <Controller
+                    name="AngularRateController"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={AngularRateControllerOptions}
+                        value={
+                          AngularRateControllerOptions[AngularRateController]
+                        }
+                        onChange={(r) => {
+                          setAngularRateController(
+                            AngularRateControllerOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">扰动观测器</div>
+                <div className="col-6">
+                  <Controller
+                    name="DisturbanceObserver"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={DisturbanceObserverOptions}
+                        value={DisturbanceObserverOptions[DisturbanceObserver]}
+                        onChange={(r) => {
+                          setDisturbanceObserver(
+                            DisturbanceObserverOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">导航滤波器</div>
+                <div className="col-6">
+                  <Controller
+                    name="GuidanceFilter"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={GuidanceFilterOptions}
+                        value={GuidanceFilterOptions[GuidanceFilter]}
+                        onChange={(r) => {
+                          setGuidanceFilter(
+                            GuidanceFilterOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">姿态滤波器</div>
+                <div className="col-6">
+                  <Controller
+                    name="AttitudeFilter"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={AttitudeFilterOptions}
+                        value={AttitudeFilterOptions[AttitudeFilter]}
+                        onChange={(r) => {
+                          setAttitudeFilter(
+                            AttitudeFilterOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">使用姿态追踪微分</div>
+                <div className="col-6">
+                  <Controller
+                    name="UseAttitudeTrackingDifferentiator"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={UseAttitudeTrackingDifferentiatorOptions}
+                        value={
+                          UseAttitudeTrackingDifferentiatorOptions[
+                            UseAttitudeTrackingDifferentiator
+                          ]
+                        }
+                        onChange={(r) => {
+                          setUseAttitudeTrackingDifferentiator(
+                            UseAttitudeTrackingDifferentiatorOptions.findIndex(
+                              (p) => Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">轨迹配置</div>
+                <div className="col-6">
+                  <Controller
+                    name="TrajactoryConfig"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={TrajactoryConfigOptions}
+                        value={TrajactoryConfigOptions[TrajactoryConfig]}
+                        onChange={(r) => {
+                          setTrajactoryConfig(
+                            TrajactoryConfigOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">使用第一型扰动</div>
+                <div className="col-6">
+                  <Controller
+                    name="UseDisturbanceTypeI"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={UseDisturbanceTypeIOptions}
+                        value={UseDisturbanceTypeIOptions[UseDisturbanceTypeI]}
+                        onChange={(r) => {
+                          setUseDisturbanceTypeI(
+                            UseDisturbanceTypeIOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">启用风场扰动</div>
+                <div className="col-6">
+                  <Controller
+                    name="IsWindEnabled"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={IsWindEnabledOptions}
+                        value={IsWindEnabledOptions[IsWindEnabled]}
+                        onChange={(r) => {
+                          setIsWindEnabled(
+                            IsWindEnabledOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">启用甲板补偿</div>
+                <div className="col-6">
+                  <Controller
+                    name="IsDeckCompensationEnabled"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={IsDeckCompensationEnabledOptions}
+                        value={
+                          IsDeckCompensationEnabledOptions[
+                            IsDeckCompensationEnabled
+                          ]
+                        }
+                        onChange={(r) => {
+                          setIsDeckCompensationEnabled(
+                            IsDeckCompensationEnabledOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="row mb-3 justify-content-center">
+                <div className="col-4 align-self-center">使用L1自适应控制</div>
+                <div className="col-6">
+                  <Controller
+                    name="UseL1Adaptive"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        options={UseL1AdaptiveOptions}
+                        value={UseL1AdaptiveOptions[UseL1Adaptive]}
+                        onChange={(r) => {
+                          setUseL1Adaptive(
+                            UseL1AdaptiveOptions.findIndex((p) =>
+                              Object.is(p, r),
+                            ),
+                          );
+                        }}
+                      />
+                    )}
+                    control={control}
+                    defaultValue=""
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">姿态控制器</div>
-          <div className="col-6">
-            <Controller
-              name="AttitudeController"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={AttitudeControllerOptions}
-                  value={AttitudeControllerOptions[AttitudeController]}
-                  onChange={(r) => {
-                    setAttitudeController(
-                      AttitudeControllerOptions.findIndex((p) =>
-                        Object.is(p, r),
-                      ),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">角速度控制器</div>
-          <div className="col-6">
-            <Controller
-              name="AngularRateController"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={AngularRateControllerOptions}
-                  value={AngularRateControllerOptions[AngularRateController]}
-                  onChange={(r) => {
-                    setAngularRateController(
-                      AngularRateControllerOptions.findIndex((p) =>
-                        Object.is(p, r),
-                      ),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">扰动观测器</div>
-          <div className="col-6">
-            <Controller
-              name="DisturbanceObserver"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={DisturbanceObserverOptions}
-                  value={DisturbanceObserverOptions[DisturbanceObserver]}
-                  onChange={(r) => {
-                    setDisturbanceObserver(
-                      DisturbanceObserverOptions.findIndex((p) =>
-                        Object.is(p, r),
-                      ),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">导航滤波器</div>
-          <div className="col-6">
-            <Controller
-              name="GuidanceFilter"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={GuidanceFilterOptions}
-                  value={GuidanceFilterOptions[GuidanceFilter]}
-                  onChange={(r) => {
-                    setGuidanceFilter(
-                      GuidanceFilterOptions.findIndex((p) => Object.is(p, r)),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">姿态滤波器</div>
-          <div className="col-6">
-            <Controller
-              name="AttitudeFilter"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={AttitudeFilterOptions}
-                  value={AttitudeFilterOptions[AttitudeFilter]}
-                  onChange={(r) => {
-                    setAttitudeFilter(
-                      AttitudeFilterOptions.findIndex((p) => Object.is(p, r)),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">使用姿态追踪微分</div>
-          <div className="col-6">
-            <Controller
-              name="UseAttitudeTrackingDifferentiator"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={UseAttitudeTrackingDifferentiatorOptions}
-                  value={
-                    UseAttitudeTrackingDifferentiatorOptions[
-                      UseAttitudeTrackingDifferentiator
-                    ]
-                  }
-                  onChange={(r) => {
-                    setUseAttitudeTrackingDifferentiator(
-                      UseAttitudeTrackingDifferentiatorOptions.findIndex((p) =>
-                        Object.is(p, r),
-                      ),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">轨迹配置</div>
-          <div className="col-6">
-            <Controller
-              name="TrajactoryConfig"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={TrajactoryConfigOptions}
-                  value={TrajactoryConfigOptions[TrajactoryConfig]}
-                  onChange={(r) => {
-                    setTrajactoryConfig(
-                      TrajactoryConfigOptions.findIndex((p) => Object.is(p, r)),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">使用第一型扰动</div>
-          <div className="col-6">
-            <Controller
-              name="UseDisturbanceTypeI"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={UseDisturbanceTypeIOptions}
-                  value={UseDisturbanceTypeIOptions[UseDisturbanceTypeI]}
-                  onChange={(r) => {
-                    setUseDisturbanceTypeI(
-                      UseDisturbanceTypeIOptions.findIndex((p) =>
-                        Object.is(p, r),
-                      ),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">启用风场扰动</div>
-          <div className="col-6">
-            <Controller
-              name="IsWindEnabled"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={IsWindEnabledOptions}
-                  value={IsWindEnabledOptions[IsWindEnabled]}
-                  onChange={(r) => {
-                    setIsWindEnabled(
-                      IsWindEnabledOptions.findIndex((p) => Object.is(p, r)),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">启用甲板补偿</div>
-          <div className="col-6">
-            <Controller
-              name="IsDeckCompensationEnabled"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={IsDeckCompensationEnabledOptions}
-                  value={
-                    IsDeckCompensationEnabledOptions[IsDeckCompensationEnabled]
-                  }
-                  onChange={(r) => {
-                    setIsDeckCompensationEnabled(
-                      IsDeckCompensationEnabledOptions.findIndex((p) =>
-                        Object.is(p, r),
-                      ),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">使用L1自适应控制</div>
-          <div className="col-6">
-            <Controller
-              name="UseL1Adaptive"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={UseL1AdaptiveOptions}
-                  value={UseL1AdaptiveOptions[UseL1Adaptive]}
-                  onChange={(r) => {
-                    setUseL1Adaptive(
-                      UseL1AdaptiveOptions.findIndex((p) => Object.is(p, r)),
-                    );
-                  }}
-                />
-              )}
-              control={control}
-              defaultValue=""
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-6">
-            <input type="submit" className="btn btn-primary" />
+          <div className="row mb-3 justify-content-center">
+            <div className="col-6">
+              <input type="submit" className="btn btn-primary" />
+            </div>
           </div>
         </div>
       </form>

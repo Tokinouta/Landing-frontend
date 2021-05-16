@@ -20,23 +20,33 @@ export interface IndicatorProps {
     turn?: number;
     vario: number;
   };
+  size?: string;
 }
 
 export const Example = (props: IndicatorProps) => {
   const [showBox] = useState<boolean>(false);
   return (
-    <div className="row row-col-3">
+    <div className="row row-col-3" style={{ height: '100%' }}>
       <div className="col-4">
-        <HeadingIndicator heading={props.data.heading} showBox={showBox} />
+        <HeadingIndicator
+          heading={props.data.heading}
+          showBox={showBox}
+          size={props.size}
+        />
       </div>
       <div className="col-4">
-        <Airspeed speed={props.data.speed} showBox={showBox} />
+        <Airspeed
+          speed={props.data.speed}
+          showBox={showBox}
+          size={props.size}
+        />
       </div>
       <div className="col-4">
         <Altimeter
           altitude={props.data.altitude}
           pressure={props.data.pressure}
           showBox={showBox}
+          size={props.size}
         />
       </div>
       <div className="col-4">
@@ -44,13 +54,22 @@ export const Example = (props: IndicatorProps) => {
           roll={props.data.roll}
           pitch={props.data.pitch}
           showBox={showBox}
+          size={props.size}
         />
       </div>
       <div className="col-4">
-        <TurnCoordinator turn={props.data.turn} showBox={showBox} />
+        <TurnCoordinator
+          turn={props.data.turn}
+          showBox={showBox}
+          size={props.size}
+        />
       </div>
       <div className="col-4">
-        <Variometer vario={props.data.vario} showBox={showBox} />
+        <Variometer
+          vario={props.data.vario}
+          showBox={showBox}
+          size={props.size}
+        />
       </div>
     </div>
   );
