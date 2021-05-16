@@ -255,7 +255,6 @@ export const SimulationConfig = () => {
       </button> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="container">
-          {' '}
           <div className="row row-col-6">
             <div className="col-6">
               <div className="row mb-3 justify-content-center">
