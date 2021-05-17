@@ -55,6 +55,8 @@ export default class ChartComponent extends React.Component<
     );
   }
 }
+
+// IMPORTANT: MUST USE WITHIN A <div>
 export const ChartWithHook = forwardRef<ChartRef, ChartProps>((props, ref) => {
   const chartContainer = useRef<HTMLCanvasElement>(null);
   const [chartInstance, setChartInstance] = useState<Chart>(null);
@@ -90,18 +92,7 @@ export const ChartWithHook = forwardRef<ChartRef, ChartProps>((props, ref) => {
     },
   }));
 
-  // const onButtonClick = () => {
-  //   chartInstance.data.datasets[0].data.push(1);
-  //   chartInstance.data.labels.push('1');
-  //   chartInstance.update();
-  // };
-
-  return (
-    <div>
-      <canvas ref={chartContainer} />
-      {/* <button onClick={onButtonClick}>Randomize!</button> */}
-    </div>
-  );
+  return <canvas ref={chartContainer} />;
 });
 
 export type ChartRef = {

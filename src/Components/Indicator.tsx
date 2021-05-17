@@ -26,7 +26,7 @@ export interface IndicatorProps {
 export const Example = (props: IndicatorProps) => {
   const [showBox] = useState<boolean>(false);
   return (
-    <div className="row row-col-3" style={{ height: '100%' }}>
+    <div className="row row-col-3" style={{ height: '50%' }}>
       <div className="col-4">
         <HeadingIndicator
           heading={props.data.heading}

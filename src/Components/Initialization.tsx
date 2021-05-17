@@ -28,44 +28,9 @@ export const Initialization = () => {
     setValue,
     handleSubmit,
   } = useForm();
-  // const [InitialPositionXOptions, setInitialPositionXOptions] =
-  //   useState<string>('0');
-  // const [InitialPositionYOptions, setInitialPositionYOptions] = useState([
-  //   { value: 1, label: '0' },
-  //   { value: 2, label: '典型数值2' },
-  //   { value: 3, label: '典型数值3' },
-  // ]);
-  // const [InitialPositionZOptions, setInitialPositionZOptions] = useState([
-  //   { value: 1, label: '0' },
-  //   { value: 2, label: '典型数值2' },
-  //   { value: 3, label: '典型数值3' },
-  // ]);
-
-  // const [InitialAttitudePhiOptions, setInitialAttitudePhiOptions] = useState([
-  //   { value: 1, label: '0' },
-  //   { value: 2, label: '典型数值2' },
-  //   { value: 3, label: '典型数值3' },
-  // ]);
-  // const [InitialAttitudePsiOptions, setInitialAttitudePsiOptions] = useState([
-  //   { value: 1, label: '0' },
-  //   { value: 2, label: '典型数值2' },
-  //   { value: 3, label: '典型数值3' },
-  // ]);
-  // const [InitialAttitudeThetaOptions, setInitialAttitudeThetaOptions] =
-  //   useState([
-  //     { value: 1, label: '0' },
-  //     { value: 2, label: '典型数值2' },
-  //     { value: 3, label: '典型数值3' },
-  //   ]);
-
-  // const [InitialPositionX, setInitialPositionX] = useState<string>('0');
-  // const [InitialPositionY, setInitialPositionY] = useState<string>('0');
-  // const [InitialPositionZ, setInitialPositionZ] = useState<string>('0');
-  // const [InitialAttitudePhi, setInitialAttitudePhi] = useState<string>('0');
-  // const [InitialAttitudePsi, setInitialAttitudePsi] = useState<string>('0');
-  // const [InitialAttitudeTheta, setInitialAttitudeTheta] = useState<string>('0');
 
   const form = React.createRef<HTMLFormElement>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pattern, setPattern] = useState<RegExp>(
     // /^ *(-?\d+(\.\d+)?)( *, *| +)(-?\d+(\.\d+)?)( *, *| +)(-?\d+(\.\d+)?) *$/,
     /^ *(-?\d+(\.\d+)?) *$/,
@@ -104,43 +69,12 @@ export const Initialization = () => {
       .then((data) => console.log(data));
   };
 
-  // const t = useRef({
-  //   id: 0,
-  //   initialPositionX: '0',
-  //   initialPositionY: '0',
-  //   initialPositionZ: '0',
-  //   initialAttitudePhi: '0',
-  //   initialAttitudePsi: '0',
-  //   initialAttitudeTheta: '0',
-  // });
-
   useEffect(() => {
     (async () => {
       await fetch('https://localhost:5001/WeatherForecast/loadInitial')
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          // console.log(Object.keys(data));
-
-          // let temp = Object.keys(data)
-          //   .slice(1)
-          //   .map((s) => {
-          //     // console.log(s);
-          //     return data[s].value.map((ele: any, ind: number) => {
-          //       return {
-          //         value: ele,
-          //         label: data[s].label[ind],
-          //       };
-          //     });
-          //   });
-          // console.log(temp);
-          // setInitialPositionX(data.x);
-          // setInitialPositionY(data.y);
-          // setInitialPositionZ(data.z);
-          // setInitialAttitudePhi(data.phi);
-          // setInitialAttitudePsi(data.psi);
-          // setInitialAttitudeTheta(data.theta);
-
           setValue('InitialPositionX', data.x, {
             shouldDirty: true,
             shouldValidate: true,
@@ -206,16 +140,6 @@ export const Initialization = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   ((data) => {
-  //     setInitialPositionX(data.initialPositionX);
-  //     setInitialPositionY(data.initialPositionY);
-  //     setInitialPositionZ(data.initialPositionZ);
-  //     setInitialAttitudePhi(data.initialAttitudePhi);
-  //     setInitialAttitudePsi(data.initialAttitudePsi);
-  //     setInitialAttitudeTheta(data.initialAttitudePhi);
-  //   })(t.current);
-  // });
   const renderOption = (prompt: string, name: string, wrongMessage: string) => {
     return (
       <div className="col-6">
@@ -244,11 +168,6 @@ export const Initialization = () => {
       <h1 style={{ padding: '2em 0.5em 0.5em 0.5em' }}>初始化配置设置</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        //   , (d) => {
-        //   console.log(d);
-        //   form.current?.classList.add('was-validated');
-        //   d.ref.classList.add('was-invalidated');
-        // })}
         ref={form}
         className="needs-validation"
       >
@@ -269,102 +188,6 @@ export const Initialization = () => {
           {renderOption('初始航母位置Z', 'ZShip', 'wrong theta')}
           {renderOption('初始航母偏航角', 'PsiShip', 'wrong theta')}
         </div>
-        {/* <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">初始位置X</div>
-          <div className="col-4">
-            <input
-              className="form-control"
-              {...register('InitialPositionX', {
-                pattern: { value: pattern, message: 'wrong x' },
-              })}
-            ></input>
-            <ErrorMessage
-              errors={errors}
-              name="InitialPositionX"
-              render={({ message }) => <p>{message}</p>}
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">初始位置Y</div>
-          <div className="col-4">
-            <input
-              className="form-control"
-              {...register('InitialPositionY', {
-                pattern: { value: pattern, message: 'wrong y' },
-              })}
-            ></input>
-            <ErrorMessage
-              errors={errors}
-              name="InitialPositionY"
-              render={({ message }) => <p>{message}</p>}
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">初始位置Z</div>
-          <div className="col-4">
-            <input
-              className="col-4 form-control"
-              {...register('InitialPositionZ', {
-                pattern: { value: pattern, message: 'wrong z' },
-              })}
-            ></input>
-            <ErrorMessage
-              errors={errors}
-              name="InitialPositionZ"
-              render={({ message }) => <p>{message}</p>}
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">初始俯仰角</div>
-          <div className="col-4">
-            <input
-              className="col-4 form-control"
-              {...register('InitialAttitudePhi', {
-                pattern: { value: pattern, message: 'wrong phi' },
-              })}
-            ></input>
-            <ErrorMessage
-              errors={errors}
-              name="InitialAttitudePhi"
-              render={({ message }) => <p>{message}</p>}
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">初始偏航角</div>
-          <div className="col-4">
-            <input
-              className="col-4 form-control"
-              {...register('InitialAttitudePsi', {
-                pattern: { value: pattern, message: 'wrong psi' },
-              })}
-            ></input>
-            <ErrorMessage
-              errors={errors}
-              name="InitialAttitudePsi"
-              render={({ message }) => <p>{message}</p>}
-            />
-          </div>
-        </div>
-        <div className="row mb-3 justify-content-center">
-          <div className="col-3 align-self-center">初始滚转角</div>
-          <div className="col-4">
-            <input
-              className="col-4 form-control"
-              {...register('InitialAttitudeTheta', {
-                pattern: { value: pattern, message: 'wrong theta' },
-              })}
-            ></input>
-            <ErrorMessage
-              errors={errors}
-              name="InitialAttitudeTheta"
-              render={({ message }) => <p>{message}</p>}
-            />
-          </div>
-        </div> */}
         <div className="row mb-3 justify-content-center">
           <div className="col-6">
             <input type="submit" className="btn btn-primary" />

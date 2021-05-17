@@ -10,6 +10,7 @@ interface MyState {
   newData: IndicatorProps;
   isStartDisabled: boolean;
   isResetDisabled: boolean;
+  simulationState: string;
 }
 
 export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
@@ -24,6 +25,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       newData: props.newdata,
       isStartDisabled: true,
       isResetDisabled: true,
+      simulationState: '已停止',
     };
     this.chartrefs = [
       React.createRef<ChartRef>(),
@@ -31,21 +33,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       React.createRef<ChartRef>(),
       React.createRef<ChartRef>(),
     ];
-    // console.log(
-    //   this.state.chartConfig[1].data === this.state.chartConfig[0].data,
-    //   this.state.chartConfig[2].data === this.state.chartConfig[0].data,
-    //   this.state.chartConfig[3].data === this.state.chartConfig[0].data,
-    // );
   }
-  // forceUpdate() {
-  //   console.log(this.props.isConnectionReady);
-  // }
-
-  // componentDidUpdate() {
-  //   console.log(this.props.isConnectionReady);
-  //   this.setState({ isConnectionReady: this.props.isConnectionReady });
-  //   console.log(this.props.isConnectionReady);
-  // }
 
   updateCharts() {
     this.updateInternalCharts();
@@ -77,6 +65,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     this.setState({
       isResetDisabled: true,
       isStartDisabled: false,
+      simulationState: '已停止',
       newData: {
         data: {
           heading: 0,
@@ -91,7 +80,11 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   }
 
   async startSimulation() {
-    this.setState({ isResetDisabled: false, isStartDisabled: true });
+    this.setState({
+      isResetDisabled: false,
+      isStartDisabled: true,
+      simulationState: '仿真中',
+    });
     await fetch('https://localhost:5001/WeatherForecast/startSimulation');
   }
 
@@ -100,35 +93,9 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     console.log(this.state.isStartDisabled);
 
     return (
-      <div className="container-fluid" style={{ minHeight: '50vh' }}>
+      <div className="container-fluid" style={{ minHeight: '100vh' }}>
         <div className="row">
           <div className="col-3">
-            {/* <div className="row justify-content-center align-control-button">
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  this.setState((prev, prop) => ({
-                    ra: prev.ra + 1,
-                  }));
-
-                  this.setState(null, () => {
-                    // this.state.chartConfig[0].data.datasets[0].data.push(1);
-                    // this.state.chartConfig[0].data.labels.push('0');
-                    // this.chartrefs[0].current?.updateChart();
-                    this.state.chartConfig.forEach((ele, ind) => {
-                      ele.data.datasets[0].data.push(1);
-                      ele.data.labels.push('0');
-                      this.chartrefs[ind].current?.update();
-                      // console.log(ind);
-                    });
-                    //
-                  });
-                  console.log(this.state.isStartDisabled);
-                }}
-              >
-                rararararara
-              </button>
-            </div> */}
             <div className="row justify-content-center align-control-button">
               <button
                 className="btn btn-primary"
@@ -147,14 +114,19 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
                 停止仿真
               </button>
             </div>
+
+            <div className="row justify-content-center align-control-button">
+              仿真状态：{this.state.simulationState}
+            </div>
           </div>
-          {/* </div>
-        <div className="row"> */}
           <div className="col">
-            <div className="row row-cols-2" style={{ margin: '0 auto' }}>
+            <div
+              className="row row-cols-2"
+              style={{ margin: '0 auto', height: '42vh' }}
+            >
               {this.chartrefs.map((ref, ind) => {
                 return (
-                  <div className="col" key={ind}>
+                  <div className="col" key={ind} style={{ height: '100%' }}>
                     <ChartWithHook
                       data={this.state.chartConfig[ind].data}
                       type={this.state.chartConfig[ind].type}
