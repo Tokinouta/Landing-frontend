@@ -54,7 +54,7 @@ export const History = (props: any) => {
       plugins: {
         title: {
           display: true,
-          text: 'Custom Chart Title',
+          text: '历史记录',
           // padding: {
           //   top: 10,
           //   bottom: 30,
@@ -76,13 +76,13 @@ export const History = (props: any) => {
   ]);
   // eslint-disable-next-line
   const [dataOption, setDataOption] = useState([
-    { value: 'position_record', label: 'position_record' },
-    { value: 'Vk_record', label: 'Vk_record' },
-    { value: 'phi_record', label: 'phi_record' },
-    { value: 'psi_record', label: 'psi_record' },
-    { value: 'theta_record', label: 'theta_record' },
-    { value: 'current_T_record', label: 'current_T_record' },
-    { value: 'time_record', label: 'time_record' },
+    { value: 'position_record', label: '位置记录' },
+    { value: 'Vk_record', label: '空速记录' },
+    { value: 'phi_record', label: '俯仰角记录' },
+    { value: 'psi_record', label: '偏航角记录' },
+    { value: 'theta_record', label: '滚转角记录' },
+    { value: 'current_T_record', label: '推力记录' },
+    // { value: 'time_record', label: 'time_record' },
   ]);
   const [dataItem, setDataitem] = useState<string>();
 
@@ -143,33 +143,7 @@ export const History = (props: any) => {
 
   return (
     <div className="container-fluid">
-      {/* <div>{ra}</div> */}
-
-      {/* <button
-        onClick={async () => {
-          const result = await fetch('https://localhost:5001/History/Index');
-          const data = await result.json();
-          console.log(data);
-          temp.current.data.datasets[0].data = data;
-          temp.current.data.labels = new Array(
-            temp.current.data.datasets[0].data.length,
-          ).fill('0');
-          mychart && mychart.current?.update();
-        }}
-      >
-        rararararararaar
-      </button> */}
-      {/* <button
-        onClick={(e) => {
-          e.preventDefault();
-          setRa(ra + 1);
-        }}
-      >
-        rarara
-      </button>
-      <div>{ra}</div> */}
-
-      <div className="row" style={{ minHeight: '80vh' }}>
+      <div className="row" style={{ height: '80vh' }}>
         <ChartWithHook
           data={temp.current.data}
           type={temp.current.type}
@@ -192,6 +166,7 @@ export const History = (props: any) => {
           className="col-5 mx-auto"
           isMulti
           menuPlacement="auto"
+          placeholder="选择仿真时间"
         ></Select>
         <Select
           options={dataOption}
@@ -202,21 +177,14 @@ export const History = (props: any) => {
           }}
           className="col-5 mx-auto"
           menuPlacement="auto"
+          placeholder="选择变量"
         ></Select>
-        <div className="col">
-          <button onClick={loadData}>load</button>
+        <div className="col ">
+          <button onClick={loadData} className="btn btn-primary">
+            加载记录
+          </button>
         </div>
       </div>
-      {/* <div>
-          <Switch
-            onChange={(c) => {
-              setChecked(c);
-              console.log(checked);
-            }}
-            checked={checked}
-          ></Switch>
-          <button onClick={loadDates}>rarararar</button>
-        </div> */}
     </div>
   );
 };

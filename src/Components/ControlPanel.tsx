@@ -8,6 +8,7 @@ interface MyState {
   chartConfig: ChartProps[];
   ra: number;
   newData: IndicatorProps;
+  dataDisplay: IndicatorProps;
   isStartDisabled: boolean;
   isResetDisabled: boolean;
   simulationState: string;
@@ -23,6 +24,16 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       ra: 0,
       chartConfig: props.chartProps,
       newData: props.newdata,
+      dataDisplay: {
+        data: {
+          heading: 0,
+          speed: 0,
+          altitude: 0,
+          roll: 0,
+          pitch: 0,
+          vario: 0,
+        },
+      },
       isStartDisabled: true,
       isResetDisabled: true,
       simulationState: '已停止',
@@ -51,6 +62,10 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     this.setState({ isStartDisabled: false });
   }
 
+  setDataDisplay(data: IndicatorProps) {
+    this.setState({ dataDisplay: data });
+  }
+
   async reset() {
     await fetch('https://localhost:5001/WeatherForecast/reset');
     this.state.chartConfig[0].data.datasets[0].data = [];
@@ -67,6 +82,16 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       isStartDisabled: false,
       simulationState: '已停止',
       newData: {
+        data: {
+          heading: 0,
+          speed: 0,
+          altitude: 0,
+          roll: 0,
+          pitch: 0,
+          vario: 0,
+        },
+      },
+      dataDisplay: {
         data: {
           heading: 0,
           speed: 0,
@@ -142,6 +167,20 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
           </div>
           <div className="col">
             <Example data={this.state.newData.data} size={'100%'} />
+            <div className="row row-col-4">
+              <div className="col-6">高度</div>
+              <div className="col-6">{this.state.newData.data.altitude}</div>
+              <div className="col-6">航向</div>
+              <div className="col-6">{this.state.newData.data.heading}</div>
+              <div className="col-6">俯仰</div>
+              <div className="col-6">{this.state.newData.data.pitch}</div>
+              <div className="col-6">滚转</div>
+              <div className="col-6">{this.state.newData.data.roll}</div>
+              <div className="col-6">空速</div>
+              <div className="col-6">{this.state.newData.data.speed}</div>
+              <div className="col-6">垂直速度</div>
+              <div className="col-6">{this.state.newData.data.vario}</div>
+            </div>
           </div>
         </div>
       </div>

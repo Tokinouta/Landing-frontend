@@ -150,6 +150,7 @@ export const Initialization = () => {
               className="form-control"
               {...register(name, {
                 pattern: { value: pattern, message: wrongMessage },
+                required: { value: true, message: '必填选项' },
               })}
             ></input>
             <ErrorMessage
@@ -165,28 +166,32 @@ export const Initialization = () => {
 
   return (
     <div className="container">
-      <h1 style={{ padding: '2em 0.5em 0.5em 0.5em' }}>初始化配置设置</h1>
+      <h1 style={{ padding: '2em 0.5em 0.5em 0.5em' }}>初始参数设置</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         ref={form}
         className="needs-validation"
       >
         <div className="row row-col-2">
-          {renderOption('初始位置X', 'InitialPositionX', 'wrong x')}
-          {renderOption('初始位置Y', 'InitialPositionY', 'wrong y')}
-          {renderOption('初始位置Z', 'InitialPositionZ', 'wrong z')}
-          {renderOption('初始俯仰角', 'InitialAttitudePhi', 'wrong phi')}
-          {renderOption('初始偏航角', 'InitialAttitudePsi', 'wrong psi')}
-          {renderOption('初始滚转角', 'InitialAttitudeTheta', 'wrong theta')}
-          {renderOption('初始俯仰角速度', 'P', 'wrong theta')}
-          {renderOption('初始偏航角速度', 'Q', 'wrong theta')}
-          {renderOption('初始滚转角速度', 'R', 'wrong theta')}
-          {renderOption('初始空速', 'Vk', 'wrong theta')}
-          {renderOption('初始迎角', 'Alpha', 'wrong theta')}
-          {renderOption('初始航母位置X', 'XShip', 'wrong theta')}
-          {renderOption('初始航母位置Y', 'YShip', 'wrong theta')}
-          {renderOption('初始航母位置Z', 'ZShip', 'wrong theta')}
-          {renderOption('初始航母偏航角', 'PsiShip', 'wrong theta')}
+          {renderOption('初始位置X', 'InitialPositionX', '请输入数字，x')}
+          {renderOption('初始位置Y', 'InitialPositionY', '请输入数字，y')}
+          {renderOption('初始位置Z', 'InitialPositionZ', '请输入数字，z')}
+          {renderOption('初始俯仰角', 'InitialAttitudePhi', '请输入数字，phi')}
+          {renderOption('初始偏航角', 'InitialAttitudePsi', '请输入数字，psi')}
+          {renderOption(
+            '初始滚转角',
+            'InitialAttitudeTheta',
+            '请输入数字，theta',
+          )}
+          {renderOption('初始俯仰角速度', 'P', '请输入数字，p')}
+          {renderOption('初始偏航角速度', 'Q', '请输入数字，q')}
+          {renderOption('初始滚转角速度', 'R', '请输入数字，r')}
+          {renderOption('初始空速', 'Vk', '请输入数字，vk')}
+          {renderOption('初始迎角', 'Alpha', '请输入数字，alpha')}
+          {renderOption('初始航母位置X', 'XShip', '请输入数字，xship')}
+          {renderOption('初始航母位置Y', 'YShip', '请输入数字，yship')}
+          {renderOption('初始航母位置Z', 'ZShip', '请输入数字，zship')}
+          {renderOption('初始航母偏航角', 'PsiShip', '请输入数字，psiship')}
         </div>
         <div className="row mb-3 justify-content-center">
           <div className="col-6">

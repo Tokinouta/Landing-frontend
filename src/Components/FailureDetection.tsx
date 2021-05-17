@@ -42,7 +42,7 @@ export const FailureDetection = () => {
   return (
     <div className="container">
       <h1 style={{ padding: '2em 0.5em 0.5em 0.5em' }}>故障注入及检测</h1>
-      <div className="row row-col-4">
+      <div className="row row-col-4 " style={{ padding: '2em 0.5em' }}>
         {category?.map((s, ind) => (
           <div className="col-2" key={ind}>
             <div className="row justify-content-center  align-items-center">
@@ -62,15 +62,20 @@ export const FailureDetection = () => {
           </div>
         ))}
       </div>
-      <div className="row row-col-4 gy-2">
+      <div className="row row-col-4 gy-2" style={{ padding: '2em 0.5em' }}>
         {category?.map((s, ind) => (
           <div className="col-2" key={ind}>
             <div className="row justify-content-center  align-items-center">
               <div className="col-sm" id={s}>
                 {s}
               </div>
-              <div className="col-sm" style={{ backgroundColor: '#9ffa28' }}>
-                {failureState[ind] ? '已注入' : '未注入'}
+              <div
+                className="col-sm"
+                style={{
+                  backgroundColor: failureState[ind] ? '#f17916' : '#9ffa28',
+                }}
+              >
+                {failureState[ind] ? '已检出' : '未检出'}
               </div>
             </div>
           </div>

@@ -100,6 +100,16 @@ export const SimulationControl = () => {
           chartConfig[2].data.datasets[0].label = 'psi';
           chartConfig[3].data.datasets[0].label = 'p';
           controlComponentRef?.current?.updateCharts();
+          controlComponentRef?.current?.setDataDisplay({
+            data: {
+              heading: 0,
+              speed: 0,
+              altitude: 0,
+              roll: 0,
+              pitch: 0,
+              vario: 0,
+            },
+          });
 
           simulationHub.on('SendSimulationData', (user, data: DataToPlot) => {
             console.log(data);
@@ -120,6 +130,16 @@ export const SimulationControl = () => {
               pitch: (data.gamma / Math.PI) * 180,
               vario: data.vk * Math.sin(data.gamma) * METERPS_TO_FEETPMIN,
             };
+            controlComponentRef?.current?.setDataDisplay({
+              data: {
+                heading: (data.chi / Math.PI) * 180,
+                speed: data.vk,
+                altitude: -data.z,
+                roll: (data.miu / Math.PI) * 180,
+                pitch: (data.gamma / Math.PI) * 180,
+                vario: data.vk * Math.sin(data.gamma),
+              },
+            });
           });
         })
         .catch((err) =>

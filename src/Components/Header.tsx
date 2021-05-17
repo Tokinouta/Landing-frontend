@@ -14,7 +14,7 @@ export const Header = () => {
           历史记录
         </Link>
         <Link to="init" className={styles['right-panel-item']}>
-          仿真初始化
+          初始参数
         </Link>
         <Link to="config" className={styles['right-panel-item']}>
           仿真配置
