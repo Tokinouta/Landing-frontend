@@ -26,5 +26,6 @@ export interface ChartProps {
 export interface ChartPropsArray {
   chartProps: ChartProps[];
   newdata: IndicatorProps;
-  isConnectionReady: boolean;
+  isSimulating: boolean;
+  toggleIsSimulating: () => void;
 }

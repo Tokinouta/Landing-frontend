@@ -88,7 +88,7 @@ export const ChartWithHook = forwardRef<ChartRef, ChartProps>((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     update: () => {
-      chartInstance.update();
+      chartInstance?.update();
     },
   }));
 

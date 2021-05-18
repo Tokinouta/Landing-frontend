@@ -46,6 +46,12 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     ];
   }
 
+  componentDidMount() {
+    this.props.isSimulating
+      ? this.setIsSimulating()
+      : this.setIsNotSimulating();
+  }
+
   updateCharts() {
     this.updateInternalCharts();
     this.setState({ newData: this.props.newdata });
@@ -77,10 +83,11 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     this.state.chartConfig[3].data.datasets[0].data = [];
     this.state.chartConfig[3].data.labels = [];
     this.updateInternalCharts();
+    this.setIsNotSimulating();
     this.setState({
-      isResetDisabled: true,
-      isStartDisabled: false,
-      simulationState: '已停止',
+      // isResetDisabled: true,
+      // isStartDisabled: false,
+      // simulationState: '已停止',
       newData: {
         data: {
           heading: 0,
@@ -105,12 +112,26 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   }
 
   async startSimulation() {
+    this.setIsSimulating();
+    await fetch('https://localhost:5001/WeatherForecast/startSimulation');
+  }
+
+  setIsSimulating() {
     this.setState({
       isResetDisabled: false,
       isStartDisabled: true,
       simulationState: '仿真中',
     });
-    await fetch('https://localhost:5001/WeatherForecast/startSimulation');
+    this.props.toggleIsSimulating();
+  }
+
+  setIsNotSimulating() {
+    this.setState({
+      isResetDisabled: true,
+      isStartDisabled: false,
+      simulationState: '已停止',
+    });
+    this.props.toggleIsSimulating();
   }
 
   render() {
