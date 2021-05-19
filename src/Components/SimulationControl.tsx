@@ -157,7 +157,7 @@ export const SimulationControl = () => {
   // }, [simulationHub.state]);
   useEffect(() => {
     cont.controlComponentRef?.current?.updateCharts();
-    cont.isSimulating = true;
+    // cont.isSimulating = true;
   }, [cont, cont.controlComponentRef]);
 
   return (

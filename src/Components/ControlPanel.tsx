@@ -47,6 +47,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
   }
 
   componentDidMount() {
+    console.log('control panel mounted', this.props.isSimulating);
     this.props.isSimulating
       ? this.setIsSimulating()
       : this.setIsNotSimulating();
@@ -84,6 +85,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     this.state.chartConfig[3].data.labels = [];
     this.updateInternalCharts();
     this.setIsNotSimulating();
+    this.props.toggleIsSimulating();
     this.setState({
       // isResetDisabled: true,
       // isStartDisabled: false,
@@ -113,6 +115,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
 
   async startSimulation() {
     this.setIsSimulating();
+    this.props.toggleIsSimulating();
     await fetch('https://localhost:5001/WeatherForecast/startSimulation');
   }
 
@@ -122,7 +125,7 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       isStartDisabled: true,
       simulationState: '仿真中',
     });
-    this.props.toggleIsSimulating();
+    // this.props.toggleIsSimulating();
   }
 
   setIsNotSimulating() {
@@ -131,12 +134,12 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       isStartDisabled: false,
       simulationState: '已停止',
     });
-    this.props.toggleIsSimulating();
+    // this.props.toggleIsSimulating();
   }
 
   render() {
     // console.log('controlPanel render called');
-    console.log(this.state.isStartDisabled);
+    // console.log(this.state.isStartDisabled);
 
     return (
       <div className="container-fluid" style={{ minHeight: '100vh' }}>

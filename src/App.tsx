@@ -1,4 +1,10 @@
-import React, { createContext, createRef, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  createRef,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Header } from './Components/Header';
@@ -130,7 +136,7 @@ const App = () => {
       // .configureLogging(signalR.LogLevel.Information)
       .build(),
   );
-  const [isSimulating, setIsSimulation] = useState<boolean>(false);
+  const isSimulating = useRef<boolean>(false);
   const [simContext, setSimContext] = useState<simContext>({
     indicator: {
       data: {
@@ -152,8 +158,16 @@ const App = () => {
     ],
     isSimulating: false,
     controlComponentRef: createRef<ControlPanel>(),
-    toggleIsSimulating: () => setIsSimulation(!isSimulating),
+    toggleIsSimulating: () => {
+      console.log('toggle called');
+      // isSimulating.current = !isSimulating.current;
+      toggle();
+    },
   });
+
+  const toggle = () => {
+    setSimContext({ ...simContext, isSimulating: !simContext.isSimulating });
+  };
 
   useEffect(() => {
     console.log('this.componentDidMount');
@@ -260,6 +274,9 @@ const App = () => {
             <Route path="config" element={<SimulationConfig />} />
             <Route path="failure" element={<FailureDetection />} />
           </Routes>
+          <button onClick={() => console.log(simContext.isSimulating)}>
+            rara
+          </button>
         </div>
       </BrowserRouter>
     </simulationContext.Provider>
