@@ -13,16 +13,6 @@ import './ControlPanel.css';
 import { Example, IndicatorProps } from './Indicator';
 import { simulationContext } from '../App';
 
-interface MyState {
-  chartConfig: ChartProps[];
-  ra: number;
-  newData: IndicatorProps;
-  dataDisplay: IndicatorProps;
-  isStartDisabled: boolean;
-  isResetDisabled: boolean;
-  simulationState: string;
-}
-
 export interface ControlPanelRef {
   updateCharts: () => void;
   setConnectionReady: () => void;
@@ -93,10 +83,6 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
       chartrefs.current[3]?.current?.update();
     };
 
-    // const setConnectionReady = ;
-
-    // const setDataDisplay1 = ;
-
     const reset = async () => {
       await fetch('https://localhost:5001/WeatherForecast/reset');
       chartConfig[0].data.datasets[0].data = [];
@@ -109,7 +95,6 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
       chartConfig[3].data.labels = [];
       updateInternalCharts();
       setIsNotSimulating();
-      //   cont.toggleIsSimulating();
       cont.isSimulating = false;
       setNewData({
         data: {
@@ -135,7 +120,6 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
 
     const startSimulation = async () => {
       setIsSimulating();
-      //   cont.toggleIsSimulating();
       cont.isSimulating = true;
       await fetch('https://localhost:5001/WeatherForecast/startSimulation');
     };
@@ -181,28 +165,26 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
                       options={chartConfig[ind].options}
                       ref={ref}
                     ></ChartWithHook>
-                    {/* {this.state.ra} */}
                   </div>
                 );
               })}
             </div>
-            {/* <div>{JSON.stringify(this.state.newData.data)}</div> */}
           </div>
           <div className="col">
             <Example data={newData.data} size={'100%'} />
             <div className="row row-col-4">
               <div className="col-6">高度</div>
-              <div className="col-6">{newData.data.altitude}</div>
+              <div className="col-6">{dataDiaplay.data.altitude}</div>
               <div className="col-6">航向</div>
-              <div className="col-6">{newData.data.heading}</div>
+              <div className="col-6">{dataDiaplay.data.heading}</div>
               <div className="col-6">俯仰</div>
-              <div className="col-6">{newData.data.pitch}</div>
+              <div className="col-6">{dataDiaplay.data.pitch}</div>
               <div className="col-6">滚转</div>
-              <div className="col-6">{newData.data.roll}</div>
+              <div className="col-6">{dataDiaplay.data.roll}</div>
               <div className="col-6">空速</div>
-              <div className="col-6">{newData.data.speed}</div>
+              <div className="col-6">{dataDiaplay.data.speed}</div>
               <div className="col-6">垂直速度</div>
-              <div className="col-6">{newData.data.vario}</div>
+              <div className="col-6">{dataDiaplay.data.vario}</div>
             </div>
           </div>
         </div>
