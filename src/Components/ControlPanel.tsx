@@ -87,9 +87,6 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
     this.setIsNotSimulating();
     this.props.toggleIsSimulating();
     this.setState({
-      // isResetDisabled: true,
-      // isStartDisabled: false,
-      // simulationState: '已停止',
       newData: {
         data: {
           heading: 0,
@@ -125,7 +122,6 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       isStartDisabled: true,
       simulationState: '仿真中',
     });
-    // this.props.toggleIsSimulating();
   }
 
   setIsNotSimulating() {
@@ -134,13 +130,9 @@ export class ControlPanel extends React.Component<ChartPropsArray, MyState> {
       isStartDisabled: false,
       simulationState: '已停止',
     });
-    // this.props.toggleIsSimulating();
   }
 
   render() {
-    // console.log('controlPanel render called');
-    // console.log(this.state.isStartDisabled);
-
     return (
       <div className="container-fluid" style={{ minHeight: '100vh' }}>
         <div className="row">

@@ -26,6 +26,7 @@ import {
 import lodash from 'lodash';
 import { DataToPlot } from './Components/DataToPlot';
 import { ControlPanel } from './Components/ControlPanel';
+import { ControlPanelRef } from './Components/ControlPanelHook';
 
 interface MyState {
   ra: number;
@@ -39,7 +40,7 @@ interface simContext {
   indicator: IndicatorProps;
   chartConfig: ChartProps[];
   isSimulating: boolean;
-  controlComponentRef: React.RefObject<ControlPanel>;
+  controlComponentRef: React.RefObject<ControlPanelRef>;
   toggleIsSimulating: () => void;
 }
 
@@ -84,7 +85,7 @@ export const simulationContext = createContext<simContext>({
   },
   chartConfig: [temp],
   isSimulating: false,
-  controlComponentRef: createRef<ControlPanel>(),
+  controlComponentRef: createRef<ControlPanelRef>(),
   toggleIsSimulating: () => {},
 });
 const METERPS_TO_FEETPMIN = 196.8504;
@@ -157,16 +158,20 @@ const App = () => {
       lodash.cloneDeep(temp),
     ],
     isSimulating: false,
-    controlComponentRef: createRef<ControlPanel>(),
+    controlComponentRef: createRef<ControlPanelRef>(),
     toggleIsSimulating: () => {
-      console.log('toggle called');
+      console.log('toggle called' + isSimulating.current);
       // isSimulating.current = !isSimulating.current;
       toggle();
     },
   });
 
   const toggle = () => {
-    setSimContext({ ...simContext, isSimulating: !simContext.isSimulating });
+    // setSimContext(() => {
+    //   console.log('inside setSimContext ', simContext);
+    //   return { ...simContext, isSimulating: !simContext.isSimulating };
+    // });
+    isSimulating.current = !isSimulating.current;
   };
 
   useEffect(() => {
@@ -261,9 +266,14 @@ const App = () => {
   //   // console.log(ref.current.current);
   //   // 如何触发重绘
   // };
+  useEffect(() => {
+    console.log('app useeffect');
+  });
 
   return (
-    <simulationContext.Provider value={simContext}>
+    <simulationContext.Provider
+      value={{ ...simContext, isSimulating: isSimulating.current }}
+    >
       <BrowserRouter>
         <div className="App">
           <Header></Header>
