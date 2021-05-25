@@ -194,9 +194,9 @@ const App = () => {
             <Route path="config" element={<SimulationConfig />} />
             <Route path="failure" element={<FailureDetection />} />
           </Routes>
-          <button onClick={() => console.log(simContext.isSimulating)}>
+          {/* <button onClick={() => console.log(simContext.isSimulating)}>
             rara
-          </button>
+          </button> */}
         </div>
       </BrowserRouter>
     </simulationContext.Provider>
