@@ -62,9 +62,9 @@ export const FailureDetection = () => {
           </div>
         ))}
       </div>
-     
+
       <h3 style={{ margin: '0.3em' }}>{decision}</h3>
-       <div className="row row-col-4 gy-2" style={{ padding: '2em 0.5em' }}>
+      <div className="row row-col-4 gy-2" style={{ padding: '2em 0.5em' }}>
         {category?.map((s, ind) => (
           <div className="col-2" key={ind}>
             <div className="row justify-content-center  align-items-center">
@@ -83,7 +83,6 @@ export const FailureDetection = () => {
           </div>
         ))}
       </div>
-     
     </div>
   );
 };

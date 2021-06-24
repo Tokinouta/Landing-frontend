@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './ControlPanel.css';
 import { Example, IndicatorProps } from './Indicator';
 import { simulationContext } from '../App';
-import  {FailureDetection} from './FailureDetection';
+import { FailureDetection } from './FailureDetection';
 
 export interface ControlPanelRef {
   updateCharts: () => void;
@@ -128,87 +128,79 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
     return (
       <div className="container-fluid" style={{ minHeight: '100vh' }}>
         <div className="row">
-           <div className="col">
+          <div className="col">
             <Example data={newData.data} size={'100%'} />
             <div className="col-sm-12">
-              <h3 >飞行参数</h3>
-              </div>
+              <h3>飞行参数</h3>
+            </div>
             <div className="row row-col-4">
               <div className="row col-sm-6">
-              <div className="col-6">高度</div>
-              <div className="col-6">{dataDiaplay.data.altitude}</div>
-             
-              
-           
-              <div className="col-6">航向</div>
-              <div className="col-6">{dataDiaplay.data.heading}</div>
-              <div className="col-6">俯仰</div>
-              <div className="col-6">{dataDiaplay.data.pitch}</div>
-              <div className="col-6">滚转</div>
-              <div className="col-6">{dataDiaplay.data.roll}</div>
-              <div className="col-6">空速</div>
-              <div className="col-6">{dataDiaplay.data.speed}</div>
-              <div className="col-6">垂直速度</div>
-              <div className="col-6">{dataDiaplay.data.vario}</div>
-
+                <div className="col-6">高度</div>
+                <div className="col-6">{dataDiaplay.data.altitude}</div>
+                <div className="col-6">航向</div>
+                <div className="col-6">{dataDiaplay.data.heading}</div>
+                <div className="col-6">俯仰</div>
+                <div className="col-6">{dataDiaplay.data.pitch}</div>
+                <div className="col-6">滚转</div>
+                <div className="col-6">{dataDiaplay.data.roll}</div>
+                <div className="col-6">空速</div>
+                <div className="col-6">{dataDiaplay.data.speed}</div>
+                <div className="col-6">垂直速度</div>
+                <div className="col-6">{dataDiaplay.data.vario}</div>
               </div>
-           
+
               <div className="row col-sm-6">
-              <div className="row justify-content-center align-control-button">
-              <button
-                className="btn btn-primary"
-                onClick={() => startSimulation()}
-                disabled={isStartDisabled}
-              >
-                开始仿真
-              </button>
-            </div>
-              <div className="row justify-content-center align-control-button">
-              <button
-                className="btn btn-primary"
-                onClick={() => reset()}
-                disabled={isResetDisabled}
-              >
-                停止仿真
-              </button>
-            </div>
+                <div className="row justify-content-center align-control-button">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => startSimulation()}
+                    disabled={isStartDisabled}
+                  >
+                    开始仿真
+                  </button>
+                </div>
+                <div className="row justify-content-center align-control-button">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => reset()}
+                    disabled={isResetDisabled}
+                  >
+                    停止仿真
+                  </button>
+                </div>
 
-            <div className="row justify-content-center align-control-button">
-              仿真状态：{simulationState}
-            </div>
-         
+                <div className="row justify-content-center align-control-button">
+                  仿真状态：{simulationState}
+                </div>
               </div>
-                 </div>
-          
-           
-          </div>
-       
-          <div className="col-3">
-              
-            <div className="col">
-            <div
-              className="row row-cols-2"
-              style={{ margin: '0 auto', height: '42vh' }}
-            >
-              {chartrefs.current.map((ref, ind) => {
-                return (
-                  <div className="col" key={ind} style={{ height: '100%' }}>
-                    <ChartWithHook
-                      data={chartConfig[ind].data}
-                      type={chartConfig[ind].type}
-                      options={chartConfig[ind].options}
-                      ref={ref}
-                    ></ChartWithHook>
-                  </div>
-                );
-              })}
             </div>
           </div>
+
+          <div className="col-3">
+            <div className="col">
+              <div
+                className="row row-cols-2"
+                style={{ margin: '0 auto', height: '42vh' }}
+              >
+                {chartrefs.current.map((ref, ind) => {
+                  return (
+                    <div className="col" key={ind} style={{ height: '100%' }}>
+                      <ChartWithHook
+                        data={chartConfig[ind].data}
+                        type={chartConfig[ind].type}
+                        options={chartConfig[ind].options}
+                        ref={ref}
+                      ></ChartWithHook>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
           <div className="col-4">
             <FailureDetection />
           </div>
-           </div>
+        </div>
       </div>
     );
   },
