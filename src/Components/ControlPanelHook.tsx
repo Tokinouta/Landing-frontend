@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './ControlPanel.css';
 import { Example, IndicatorProps } from './Indicator';
 import { simulationContext } from '../App';
+import  {FailureDetection} from './FailureDetection';
 
 export interface ControlPanelRef {
   updateCharts: () => void;
@@ -127,8 +128,33 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
     return (
       <div className="container-fluid" style={{ minHeight: '100vh' }}>
         <div className="row">
-          <div className="col-3">
-            <div className="row justify-content-center align-control-button">
+           <div className="col">
+            <Example data={newData.data} size={'100%'} />
+            <div className="col-sm-12">
+              <h3 >飞行参数</h3>
+              </div>
+            <div className="row row-col-4">
+              <div className="row col-sm-6">
+              <div className="col-6">高度</div>
+              <div className="col-6">{dataDiaplay.data.altitude}</div>
+             
+              
+           
+              <div className="col-6">航向</div>
+              <div className="col-6">{dataDiaplay.data.heading}</div>
+              <div className="col-6">俯仰</div>
+              <div className="col-6">{dataDiaplay.data.pitch}</div>
+              <div className="col-6">滚转</div>
+              <div className="col-6">{dataDiaplay.data.roll}</div>
+              <div className="col-6">空速</div>
+              <div className="col-6">{dataDiaplay.data.speed}</div>
+              <div className="col-6">垂直速度</div>
+              <div className="col-6">{dataDiaplay.data.vario}</div>
+
+              </div>
+           
+              <div className="row col-sm-6">
+              <div className="row justify-content-center align-control-button">
               <button
                 className="btn btn-primary"
                 onClick={() => startSimulation()}
@@ -137,7 +163,7 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
                 开始仿真
               </button>
             </div>
-            <div className="row justify-content-center align-control-button">
+              <div className="row justify-content-center align-control-button">
               <button
                 className="btn btn-primary"
                 onClick={() => reset()}
@@ -150,8 +176,16 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
             <div className="row justify-content-center align-control-button">
               仿真状态：{simulationState}
             </div>
+         
+              </div>
+                 </div>
+          
+           
           </div>
-          <div className="col">
+       
+          <div className="col-3">
+              
+            <div className="col">
             <div
               className="row row-cols-2"
               style={{ margin: '0 auto', height: '42vh' }}
@@ -170,24 +204,11 @@ export const ControlPanel = forwardRef<ControlPanelRef, ChartPropsArray>(
               })}
             </div>
           </div>
-          <div className="col">
-            <Example data={newData.data} size={'100%'} />
-            <div className="row row-col-4">
-              <div className="col-6">高度</div>
-              <div className="col-6">{dataDiaplay.data.altitude}</div>
-              <div className="col-6">航向</div>
-              <div className="col-6">{dataDiaplay.data.heading}</div>
-              <div className="col-6">俯仰</div>
-              <div className="col-6">{dataDiaplay.data.pitch}</div>
-              <div className="col-6">滚转</div>
-              <div className="col-6">{dataDiaplay.data.roll}</div>
-              <div className="col-6">空速</div>
-              <div className="col-6">{dataDiaplay.data.speed}</div>
-              <div className="col-6">垂直速度</div>
-              <div className="col-6">{dataDiaplay.data.vario}</div>
-            </div>
           </div>
-        </div>
+          <div className="col-4">
+            <FailureDetection />
+          </div>
+           </div>
       </div>
     );
   },
